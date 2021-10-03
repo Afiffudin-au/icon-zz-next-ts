@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import type { AppProps } from 'next/app'
 import ProgressBar from '@badrap/bar-of-progress'
 import Router from 'next/router'
+import { Provider } from 'react-redux'
+import { store } from '../redux/app/store'
 const progress = new ProgressBar({
   size: 4,
   color: '#ff0f0f',
@@ -15,6 +17,10 @@ Router.events.on('routeChangeStart', progress.start)
 Router.events.on('routeChangeComplete', progress.finish)
 Router.events.on('routeChangeError', progress.finish)
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <Provider store={store}>
+      <Component {...pageProps} />
+    </Provider>
+  )
 }
 export default MyApp

@@ -1,0 +1,12 @@
+.loading {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+.loading > * {
+  // margin-right: 20px;
+  color: #3fb5b5 !important;
+  width: 25px !important;
+  height: 25px !important;
+}

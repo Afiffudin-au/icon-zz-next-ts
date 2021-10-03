@@ -1,0 +1,50 @@
+$defaultHeight: 40px;
+.searchBanner {
+  border-top: 1px solid rgb(255, 70, 70);
+  width: 100%;
+  margin: auto;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  .searchBar {
+    height: $defaultHeight;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background-color: #e3e7e9;
+    // padding: 10px;
+    .dropdownWrap {
+      position: relative;
+      .dropdown {
+        color: #5f7d95;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        cursor: pointer;
+      }
+    }
+    .searchInput {
+      color: #5b6e7e;
+      width: 100%;
+      // padding: 20px;
+      border: none;
+      height: $defaultHeight;
+      line-height: $defaultHeight;
+      outline: 0;
+      background-color: transparent;
+    }
+    .searchButton {
+      cursor: pointer;
+      background-color: #4ad295;
+      display: flex;
+      height: 100%;
+      align-items: center;
+      width: 40px;
+      justify-content: center;
+    }
+  }
+}
+@media (max-width: 575.98px) {
+  .searchBanner {
+    width: 100%;
+  }
+}

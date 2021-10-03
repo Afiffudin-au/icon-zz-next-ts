@@ -1,16 +1,16 @@
 import React from 'react'
 import styles from './ModalDetailPack.module.scss'
-import CloseIcon from '@material-ui/icons/Close'
-import { useStylesModal } from '../../custom-hooks/useStylesModal/useStylesModal'
-import IconButton from '@material-ui/core/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
+import { useStylesModal } from '../../hooks/useStylesModal/useStylesModal'
+import { IconButton } from '@mui/material'
 import { useAppSelector } from '../../redux/app/hooks'
 import {
   selectIconPackDetailBlocks,
   selectTokenBlocks,
 } from '../../redux/features/icon/iconSlice'
 import { LoadingLinear } from '../Progress/LoadingLinear/LoadingLinear'
-import { useGetSearchPack } from '../../custom-hooks/useGetSearchPack/useGetSearchPack'
-import { useHistory } from 'react-router-dom'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 interface DetailPackItems {
   category: string
   category_id: string
@@ -25,18 +25,17 @@ interface DetailPackItems {
   tags_id: string
 }
 function ModalDetailPack({ handleClose }: any) {
+  const router = useRouter()
   const classes = useStylesModal()
   const { dataPackDetails, loading } = useAppSelector(
     selectIconPackDetailBlocks
   )
-  const history = useHistory()
   const { token } = useAppSelector(selectTokenBlocks)
-  const { getSearchPack } = useGetSearchPack()
   const { data }: { data: DetailPackItems } = dataPackDetails
   const tagsSplit = data?.tags?.split(',')
   const handleSearchByTag = (tag: string) => {
-    getSearchPack(token, tag, 1)
-    history.push('/search-packs')
+    router.push(`/search-packs/${tag}`)
+    handleClose()
   }
   return (
     <div className={classes.paper + ' ModalDetail ' + styles.wrapModal}>
@@ -53,10 +52,13 @@ function ModalDetailPack({ handleClose }: any) {
         <div className={styles.contents}>
           <div className={styles.wrap}>
             <div className={styles.imageBox}>
-              <img
-                className={styles.imagePreview}
-                src={data?.images?.sprite}
+              <Image
                 alt=''
+                src={data?.images?.sprite || '/e8e8e8.png'}
+                objectFit='cover'
+                layout='responsive'
+                width='200px'
+                height='200px'
               />
             </div>
             <div className={styles.content1}>
@@ -67,6 +69,7 @@ function ModalDetailPack({ handleClose }: any) {
                 Tags :{' '}
                 {tagsSplit?.map((item) => (
                   <p
+                    key={item}
                     className={styles.tags}
                     onClick={() => handleSearchByTag(item)}>
                     {item + ','}

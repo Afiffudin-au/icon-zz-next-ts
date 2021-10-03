@@ -1,0 +1,19 @@
+@import '../ButtonSCSS/ButtonSCSS.scss';
+.pagenation {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
+  .arrowBack {
+    @include button();
+  }
+  .pageNumber {
+    color: #0277bd;
+    font-weight: 600;
+    margin: 0;
+  }
+  .arrowForward {
+    @include button();
+  }
+}

@@ -1,0 +1,38 @@
+$primary-color: #cfd9e0;
+.navbar {
+  position: sticky;
+  top: 0;
+  background-color: #0b2239;
+  padding: 0.5rem 1rem;
+  .toggle {
+    padding: 0;
+    border: none !important;
+    display: none;
+    outline: 0 !important;
+    .closeIcon {
+      color: white;
+    }
+    .hamburgerIcon {
+      color: white;
+    }
+  }
+  .brand {
+    margin-right: 30px;
+    font-weight: bold;
+    color: $primary-color !important;
+  }
+  .link {
+    color: $primary-color !important;
+    font-size: 14px;
+  }
+  .link:hover {
+    color: rgb(195, 194, 194) !important;
+  }
+}
+@media (min-width: 320px) and (max-width: 767.98px) {
+  .navbar {
+    .toggle {
+      display: block;
+    }
+  }
+}

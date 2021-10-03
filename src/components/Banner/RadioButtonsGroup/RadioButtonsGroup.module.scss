@@ -1,0 +1,67 @@
+// Codepen spesific styling - only to center the elements in the pen preview and viewport
+.container {
+  background-color: white;
+  box-shadow: 0 0 30px rgba(14, 42, 71, 0.25);
+  position: absolute;
+  border-radius: 8px;
+  padding: 10px;
+  top: 51px;
+  $primary-color: #44d17f; // Change color here. C'mon, try it!
+  $text-color: #5f7d95;
+  form {
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  label {
+    display: flex;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0.375em;
+    /* Accessible outline */
+    /* Remove comment to use */
+    /*
+      &:focus-within {
+          outline: .125em solid $primary-color;
+      }
+    */
+    input {
+      position: absolute;
+      left: -9999px;
+      &:checked + span {
+        background-color: mix(#fff, $primary-color, 84%);
+        &:before {
+          box-shadow: inset 0 0 0 0.4375em $primary-color;
+        }
+      }
+    }
+    span {
+      color: $text-color;
+      display: flex;
+      align-items: center;
+      padding: 0.375em 0.75em 0.375em 0.375em;
+      border-radius: 99em; // or something higher...
+      transition: 0.25s ease;
+      &:hover {
+        background-color: mix(#fff, $primary-color, 84%);
+      }
+      &:before {
+        display: flex;
+        flex-shrink: 0;
+        content: '';
+        background-color: #fff;
+        width: 1.5em;
+        height: 1.5em;
+        border-radius: 50%;
+        margin-right: 0.375em;
+        transition: 0.25s ease;
+        box-shadow: inset 0 0 0 0.125em $primary-color;
+      }
+    }
+  }
+}
+// End Codepen spesific styling

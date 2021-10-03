@@ -1,0 +1,15 @@
+@mixin button() {
+  background-color: #0288d1;
+  width: 100px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+  margin: 5px;
+  cursor: pointer;
+  transition: all ease 0.1s;
+  &:hover {
+    background-color: #0277bd;
+  }
+}

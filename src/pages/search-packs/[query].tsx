@@ -68,6 +68,7 @@ export const getServerSideProps = async (context: any) => {
   const query = context.params.query
   const page = context.query.page || 1
   const limit = context.query.limit || 30
+  const key = query
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -102,6 +103,6 @@ export const getServerSideProps = async (context: any) => {
       return err
     })
   return {
-    props: { iconPacks, page, tokenResult },
+    props: { key, iconPacks, page, tokenResult },
   }
 }

@@ -3,25 +3,14 @@ import style from './SearchBanner.module.scss'
 import SearchIcon from '@mui/icons-material/Search'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import RadioButtonsGroup from '../RadioButtonsGroup/RadioButtonsGroup'
-// import { useHistory } from 'react-router'
-// import { useAppSelector } from '../../../redux/app/hooks'
-// import { useGetSearchIcon } from '../../../custom-hooks/useGetSearchIcon/useGetSearchIcon'
-// import { useGetSearchPack } from '../../../custom-hooks/useGetSearchPack/useGetSearchPack'
-// import { selectTokenBlocks } from '../../../redux/features/icon/iconSlice'
-// import { useAppDispatch } from '../../../redux/app/hooks'
-// import { addParameter } from '../../../redux/features/icon/iconSlice'
-// import { useGetAccessToken } from '../../../custom-hooks/useGetAccessToken/useGetAccessToken'
+import { useRouter } from 'next/router'
+
 function SearchBanner() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [query, setQuery] = useState<string>('')
-  // const { token, tokenAccepted } = useAppSelector(selectTokenBlocks)
-  // const { getSearchIcon } = useGetSearchIcon()
-  // const { getSearchPack } = useGetSearchPack()
-  // const { getAccessToken } = useGetAccessToken()
-  // const history = useHistory()
-  // const dispatch = useAppDispatch()
+  const router = useRouter()
   const handleCheck = (type: string) => {
     setIsChecked(!isChecked)
     setTypeToSearch(type)
@@ -37,30 +26,9 @@ function SearchBanner() {
       return
     }
     if (typeToSearch === 'icons') {
-      // if (tokenAccepted) {
-      //   getSearchIcon(token, query)
-      //   dispatch(
-      //     addParameter({
-      //       query: query,
-      //     })
-      //   )
-      // } else {
-      //   getAccessToken()
-      // }
-      // history.push('/search-icons')
     }
     if (typeToSearch === 'packs') {
-      // if (tokenAccepted) {
-      //   getSearchPack(token, query)
-      //   dispatch(
-      //     addParameter({
-      //       query: query,
-      //     })
-      //   )
-      // } else {
-      //   getAccessToken()
-      // }
-      // history.push('/search-packs')
+      router.push(`/search-packs/${query}`)
     }
   }
   return (

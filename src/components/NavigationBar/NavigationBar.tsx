@@ -3,12 +3,13 @@ import { Navbar, Nav } from 'react-bootstrap'
 import nav from './NavigationBar.module.scss'
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
+import { useRouter } from 'next/router'
 
 function NavigationBar() {
   const [hamburgerIcon, setHamburgerIcon] = useState<boolean>(false)
-  // const history = useHistory()
+  const router = useRouter()
   const linkToPacks = () => {
-    // history.push('/packs')
+    router.push('/icon-packs/icon-pack')
   }
   const linkToUiIcons = () => {
     // history.push('/ui-icons')

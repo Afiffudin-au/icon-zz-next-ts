@@ -1,7 +1,10 @@
 $defaultHeight: 40px;
 .searchBanner {
+  position: sticky;
+  z-index: 999;
   border-top: 1px solid rgb(255, 70, 70);
   width: 100%;
+  top: 0;
   margin: auto;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   .searchBar {

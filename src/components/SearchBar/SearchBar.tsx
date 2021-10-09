@@ -8,6 +8,7 @@ import {
   addParameter,
   selectTokenBlocks,
 } from '../../redux/features/icon/iconSlice'
+import { useRouter } from 'next/router'
 
 function SearchBar() {
   const [query, setQuery] = useState<string>('')
@@ -15,7 +16,7 @@ function SearchBar() {
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const { token, tokenAccepted } = useAppSelector(selectTokenBlocks)
-
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const handleCheck = (type: string) => {
     setIsChecked(!isChecked)
@@ -32,30 +33,9 @@ function SearchBar() {
       return
     }
     if (typeToSearch === 'icons') {
-      if (tokenAccepted) {
-        // getSearchIcon(token, query)
-        dispatch(
-          addParameter({
-            query: query,
-          })
-        )
-      } else {
-        // getAccessToken()
-      }
-      // history.push('/search-icons')
     }
     if (typeToSearch === 'packs') {
-      if (tokenAccepted) {
-        // getSearchPack(token, query)
-        dispatch(
-          addParameter({
-            query: query,
-          })
-        )
-      } else {
-        // getAccessToken()
-      }
-      // history.push('/search-packs')
+      router.push(`/search-packs/${query}`)
     }
   }
   useEffect(() => {

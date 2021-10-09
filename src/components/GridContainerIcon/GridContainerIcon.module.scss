@@ -1,0 +1,26 @@
+@mixin gridCol($value) {
+  .gridContainerIcon {
+    grid-template-columns: repeat($value, minmax(0, 1fr));
+  }
+}
+.gridContainerIcon {
+  padding: 10px;
+  display: grid;
+  grid-gap: 0.25rem;
+  gap: 0.25rem;
+}
+@media (min-width: 320px) {
+  @include gridCol(3);
+}
+@media (min-width: 576px) {
+  @include gridCol(4);
+}
+@media (min-width: 768px) {
+  @include gridCol(5);
+}
+@media (min-width: 992px) {
+  @include gridCol(6);
+}
+@media (min-width: 1200px) {
+  @include gridCol(8);
+}

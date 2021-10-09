@@ -1,0 +1,15 @@
+.cardIcon {
+  margin: 5px;
+  padding: 10px;
+  height: 100px;
+  transition: all ease-in-out 0.1s;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(233, 233, 233);
+    border-radius: 5px;
+  }
+  .image {
+    width: 64px;
+    margin: auto;
+  }
+}

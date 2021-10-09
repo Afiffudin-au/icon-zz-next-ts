@@ -49,6 +49,7 @@ function CardIconPacks({
               height='100%'
               objectFit='contain'
               layout='responsive'
+              quality={100}
             />
           </picture>
         </div>

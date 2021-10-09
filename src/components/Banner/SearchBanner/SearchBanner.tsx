@@ -26,6 +26,7 @@ function SearchBanner() {
       return
     }
     if (typeToSearch === 'icons') {
+      router.push(`/search-icons/${query}`)
     }
     if (typeToSearch === 'packs') {
       router.push(`/search-packs/${query}`)

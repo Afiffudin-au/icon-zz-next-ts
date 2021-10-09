@@ -14,7 +14,7 @@ import Pagenation from '../components/Pagenation/Pagenation'
 import { useAppDispatch } from '../redux/app/hooks'
 import { addToken } from '../redux/features/icon/iconSlice'
 import { IconPacksItems } from '../interfaces/IconPackInterface'
-const Home: NextPage = ({ tokenResult, IconPacks, page }: any) => {
+const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
   const dispatch = useAppDispatch()
   const [pageNumber, setPageNumber] = useState<number>(page || 1)
   const router = useRouter()
@@ -43,7 +43,7 @@ const Home: NextPage = ({ tokenResult, IconPacks, page }: any) => {
         <title>Icon zz ts</title>
       </Head>
       <NavigationBar />
-      <Banner />
+      <Banner totalIcons={totalIcons} />
       <GridContainer>
         {IconPacks &&
           IconPacks?.data?.map((item: IconPacksItems, index: number) => (
@@ -77,26 +77,47 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
-  const IconPacks = await axios({
-    method: 'get',
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer ' + tokenResult.data.token,
-    },
-    url: 'https://api.flaticon.com/v2/items/packs/priority',
-    params: {
-      page: page,
-      limit: limit,
-    },
-  })
-    .then((res) => {
-      return res.data
+  const [totalIcons, IconPacks] = await Promise.all([
+    //TotalIcons
+    axios({
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + tokenResult.data.token,
+      },
+      url: 'https://api.flaticon.com/v2/total/icons',
+      params: {
+        apikey: process.env.REACT_APP_API_KEY,
+      },
     })
-    .catch((err) => {
-      return err
+      .then((res) => {
+        return res.data.data.total
+      })
+      .catch((err) => {
+        return err
+      }),
+    // IconPacks
+    axios({
+      method: 'get',
+      headers: {
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + tokenResult.data.token,
+      },
+      url: 'https://api.flaticon.com/v2/items/packs/priority',
+      params: {
+        page: page,
+        limit: limit,
+      },
     })
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => {
+        return err
+      }),
+  ])
   return {
-    props: { tokenResult, IconPacks, page },
+    props: { totalIcons, tokenResult, IconPacks, page },
   }
 }
 export default Home

@@ -4,7 +4,6 @@ import SearchIcon from '@mui/icons-material/Search'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import RadioButtonsGroup from '../RadioButtonsGroup/RadioButtonsGroup'
 import { useRouter } from 'next/router'
-
 function SearchBanner() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
@@ -50,7 +49,6 @@ function SearchBanner() {
               />
             )}
           </div>
-
           <input
             onChange={(e) => setQuery(e.target.value)}
             className={style.searchInput}

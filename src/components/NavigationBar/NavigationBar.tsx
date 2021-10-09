@@ -12,7 +12,7 @@ function NavigationBar() {
     router.push('/icon-packs/icon-pack')
   }
   const linkToUiIcons = () => {
-    // history.push('/ui-icons')
+    router.push('/ui-icons/ui-icon')
   }
   return (
     <Navbar className={nav.navbar} expand='sm' sticky='top'>

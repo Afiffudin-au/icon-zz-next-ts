@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import SearchAlert from '../../components/Alert/Warning/SearchAlert'
 import CardIconPacks from '../../components/CardIconPack/CardIconPack'
 import GridContainer from '../../components/GridContainer/GridContainer'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
@@ -49,7 +50,11 @@ function IconPack({ iconPacks, tokenResult, page }: any) {
           />
         ))}
       </GridContainer>
-      <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+      {iconPacks?.data.length !== 0 ? (
+        <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+      ) : (
+        <SearchAlert />
+      )}
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 
-function SearchIcon({ page, tokenResult, dataIcons }: any) {
+function UiIcon({ page, tokenResult, dataIcons }: any) {
   const [pageNumber, setPageNumber] = useState<number>(page || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -35,7 +35,6 @@ function SearchIcon({ page, tokenResult, dataIcons }: any) {
       })
     )
   }, [])
-  console.log(dataIcons?.data.length)
   return (
     <div>
       <NavigationBar />
@@ -61,12 +60,10 @@ function SearchIcon({ page, tokenResult, dataIcons }: any) {
   )
 }
 
-export default SearchIcon
+export default UiIcon
 export const getServerSideProps = async (context: any) => {
-  const query = context.params.query
   const page = context.query.page || 1
   const limit = context.query.limit || 30
-  const key = query
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -89,7 +86,6 @@ export const getServerSideProps = async (context: any) => {
     },
     url: 'https://api.flaticon.com/v2/items/icons/priority',
     params: {
-      q: query,
       limit: limit,
       page: page,
     },
@@ -105,7 +101,6 @@ export const getServerSideProps = async (context: any) => {
       page,
       tokenResult,
       dataIcons,
-      key,
     },
   }
 }

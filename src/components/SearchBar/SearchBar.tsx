@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import style from './SearchBar.module.scss'
-import SearchIcon from '@material-ui/icons/Search'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
+import SearchIcon from '@mui/icons-material/Search'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import RadioButtonsGroup from '../Banner/RadioButtonsGroup/RadioButtonsGroup'
-import { useHistory } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../redux/app/hooks'
 import {
   addParameter,
   selectTokenBlocks,
 } from '../../redux/features/icon/iconSlice'
-import { useGetSearchIcon } from '../../custom-hooks/useGetSearchIcon/useGetSearchIcon'
-import { useGetSearchPack } from '../../custom-hooks/useGetSearchPack/useGetSearchPack'
-import { useGetAccessToken } from '../../custom-hooks/useGetAccessToken/useGetAccessToken'
+
 function SearchBar() {
   const [query, setQuery] = useState<string>('')
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const { token, tokenAccepted } = useAppSelector(selectTokenBlocks)
-  const { getSearchIcon } = useGetSearchIcon()
-  const { getSearchPack } = useGetSearchPack()
-  const { getAccessToken } = useGetAccessToken()
 
-  const history = useHistory()
   const dispatch = useAppDispatch()
   const handleCheck = (type: string) => {
     setIsChecked(!isChecked)
@@ -40,33 +33,33 @@ function SearchBar() {
     }
     if (typeToSearch === 'icons') {
       if (tokenAccepted) {
-        getSearchIcon(token, query)
+        // getSearchIcon(token, query)
         dispatch(
           addParameter({
             query: query,
           })
         )
       } else {
-        getAccessToken()
+        // getAccessToken()
       }
-      history.push('/search-icons')
+      // history.push('/search-icons')
     }
     if (typeToSearch === 'packs') {
       if (tokenAccepted) {
-        getSearchPack(token, query)
+        // getSearchPack(token, query)
         dispatch(
           addParameter({
             query: query,
           })
         )
       } else {
-        getAccessToken()
+        // getAccessToken()
       }
-      history.push('/search-packs')
+      // history.push('/search-packs')
     }
   }
   useEffect(() => {
-    getAccessToken()
+    // getAccessToken()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

@@ -10,27 +10,27 @@ import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
-function SearchPack({ iconPacks, page, tokenResult }: any) {
+
+function IconPack({ iconPacks, tokenResult, page }: any) {
   const [pageNumber, setPageNumber] = useState<number>(page || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const handlePagenation = (page: number) => {
-    if (page === 0) return
+    if (pageNumber === 0) return
     setPageNumber(page)
-    const path = router.pathname
     const query: any = router.query
-    query.page = page || 1
-    query.limit = 30
+    const path = router.pathname
+    query.page = page
     router.push({
       pathname: path,
       query,
     })
-    console.log(query)
+    console.log(page)
   }
   useEffect(() => {
     dispatch(
       addToken({
-        token: tokenResult.data.token,
+        token: tokenResult?.data?.token,
       })
     )
   }, [])
@@ -54,12 +54,10 @@ function SearchPack({ iconPacks, page, tokenResult }: any) {
   )
 }
 
-export default SearchPack
+export default IconPack
 export const getServerSideProps = async (context: any) => {
-  const query = context.params.query
   const page = context.query.page || 1
-  const limit = context.query.limit || 30
-  const key = query
+  const key = context.params.IconPack
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -74,18 +72,15 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
+  console.log(key)
   const iconPacks = await axios({
     method: 'get',
     headers: {
       Accept: 'application/json',
       Authorization: 'Bearer ' + tokenResult.data.token,
     },
-    url: 'https://api.flaticon.com/v2/search/packs',
-    params: {
-      q: query,
-      page: page,
-      limit: limit,
-    },
+    url: 'https://api.flaticon.com/v2/items/packs/priority',
+    params: { limit: 30, page: page },
   })
     .then((res) => {
       return res.data
@@ -94,6 +89,11 @@ export const getServerSideProps = async (context: any) => {
       return err
     })
   return {
-    props: { key, iconPacks, page, tokenResult },
+    props: {
+      iconPacks,
+      tokenResult,
+      page,
+      key,
+    },
   }
 }

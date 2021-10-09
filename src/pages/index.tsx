@@ -13,18 +13,7 @@ import { useEffect, useState } from 'react'
 import Pagenation from '../components/Pagenation/Pagenation'
 import { useAppDispatch } from '../redux/app/hooks'
 import { addToken } from '../redux/features/icon/iconSlice'
-interface IconPacksItems {
-  catagory: string
-  id: number
-  description: string
-  images: {
-    sprite: string
-  }
-  pack_items: number
-  license: string
-  tags_id: any
-  category_id: any
-}
+import { IconPacksItems } from '../interfaces/IconPackInterface'
 const Home: NextPage = ({ tokenResult, IconPacks, page }: any) => {
   const dispatch = useAppDispatch()
   const [pageNumber, setPageNumber] = useState<number>(page || 1)

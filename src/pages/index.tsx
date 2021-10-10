@@ -1,7 +1,6 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Banner from '../components/Banner/Banner'
 import NavigationBar from '../components/NavigationBar/NavigationBar'
 import styles from '../styles/Home.module.css'

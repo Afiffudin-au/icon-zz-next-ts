@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { DarkTooltip } from '../Mui-Custom/DarkTooltip'
 import style from './CardIcon.module.scss'
-// import { useGetIconDetail } from '../../custom-hooks/useGetIconDetail/useGetIconDetail'
 import { useAppSelector } from '../../redux/app/hooks'
 import { selectTokenBlocks } from '../../redux/features/icon/iconSlice'
 import StarIcon from '@mui/icons-material/Star'
-// import ModalDetailIcon from '../ModalDetailIcon/ModalDetailIcon'
 import Modal from '@mui/material/Modal'
 import Image from 'next/image'
 import Fade from '@mui/material/Fade'
+import ModalDetailIcon from '../ModalDetailIcon/ModalDetailIcon'
+import { useGetIconDetail } from '../../hooks/useGetIconDetail/useGetIconDetail'
 interface CardIconItems {
   description: string
   id: number
@@ -23,12 +23,12 @@ function CardIcon({
   packId,
   premium,
 }: Required<CardIconItems>) {
-  // const { getIconDetail } = useGetIconDetail()
+  const { getIconDetail } = useGetIconDetail()
   const { token } = useAppSelector(selectTokenBlocks)
   const [open, setOpen] = useState<boolean>(false)
   const [iconId, setIconId] = useState<number>(0)
   const handleDetail = () => {
-    // getIconDetail(id, token)
+    getIconDetail(id, token)
     setIconId(id)
     setOpen(true)
   }
@@ -59,14 +59,14 @@ function CardIcon({
           </div>
         </DarkTooltip>
       </div>
-      {/* <Modal
+      <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
         style={{ overflowY: 'scroll' }}>
         <ModalDetailIcon handleClose={handleClose} iconId={iconId} />
-      </Modal> */}
+      </Modal>
     </>
   )
 }

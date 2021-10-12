@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import SearchAlert from '../../components/Alert/Warning/SearchAlert'
 import CardIconPacks from '../../components/CardIconPack/CardIconPack'
+import Drawer from '../../components/Drawer/Drawer'
 import GridContainer from '../../components/GridContainer/GridContainer'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import Pagenation from '../../components/Pagenation/Pagenation'
@@ -39,7 +40,7 @@ function IconPack({ iconPacks, tokenResult, page }: any) {
     <div>
       <NavigationBar />
       <SearchBar />
-      <GridContainer>
+      {/* <GridContainer>
         {iconPacks?.data?.map((item: IconPacksItems, index: number) => (
           <CardIconPacks
             key={item.id}
@@ -54,7 +55,8 @@ function IconPack({ iconPacks, tokenResult, page }: any) {
         <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
       ) : (
         <SearchAlert />
-      )}
+      )} */}
+      <Drawer />
     </div>
   )
 }

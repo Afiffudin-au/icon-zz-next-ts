@@ -36,6 +36,7 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
       })
     )
   }, [])
+
   return (
     <div className={styles.container}>
       <Head>

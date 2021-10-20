@@ -1,18 +1,21 @@
-import * as React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Button from '@mui/material/Button'
 
-import { TextField } from '@mui/material'
+import { TextField, useMediaQuery } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
-
+import styles from './Drawer.module.scss'
+import { useRouter } from 'next/router'
 export default function Drawer() {
-  const [alignmentColorType, setAlignmentColorType] = React.useState('')
-  const [alignmentIconType, setAlignmentIconType] = React.useState('')
-  const [query, setQuery] = React.useState<string>('')
-  const inputPageRef = React.useRef<any>(null)
+  const router = useRouter()
+  const [alignmentColorType, setAlignmentColorType] = useState('')
+  const [alignmentIconType, setAlignmentIconType] = useState('')
+  const [perPage, setPerPage] = useState<any>(router.query.page || 1)
+  const [perLimit, setPerLimit] = useState<any>(router.query.limit || 30)
+  const [catagory, setCatagory] = useState<string>('')
   const handleChangeColorType = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string
@@ -43,36 +46,63 @@ export default function Drawer() {
       setState({ ...state, [anchor]: open })
     }
   const handleFilter = (anchor: any, condition: any) => {
-    console.log(inputPageRef.current?.value)
     toggleDrawer(anchor, condition)
+    const path = router.pathname
+    const query: any = router.query
+    query.page = perPage || 1
+    query.limit = perLimit || 30
+    query.catagory = catagory || ''
+    query.color = alignmentColorType
+    query.iconType = alignmentIconType
+    // delete query.iconType
+    if (query.catagory === '') delete query.catagory
+    if (query.color === null) delete query.color
+    if (query.iconType === null) delete query.iconType
+    console.log(query.color)
+    router.push({
+      pathname: path,
+      query,
+    })
   }
+  const handleClearFilter = () => {
+    setPerPage(1)
+    setPerLimit(30)
+    setCatagory('')
+    setAlignmentColorType('')
+    setAlignmentIconType('')
+    router.push('/icon-packs/icon-pack', undefined, {
+      shallow: true,
+    })
+  }
+  const matches = useMediaQuery('(min-width:576px)')
   const list = (anchor: Anchor) => (
-    <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role='presentation'
-      // onClick={}
-    >
+    <Box sx={matches ? { width: 300 } : { width: 340 }} role='presentation'>
       <Box p='10px' display='flex' flexDirection='column' gap='10px'>
         <TextField
-          // onChange={(e) => setQuery(e.target.value)}
-          // style={{ marginTop: '5px' }}
           id='standard-basic'
           label='Page'
           variant='standard'
-          inputRef={inputPageRef}
-          // ref={inputPageRef}
+          onChange={(e) => setPerPage(parseInt(e.target.value))}
+          type='number'
+          autoComplete='off'
+          value={perPage}
         />
         <TextField
-          // style={{ marginTop: '5px' }}
           id='standard-basic'
           label='Limit'
           variant='standard'
+          onChange={(e) => setPerLimit(parseInt(e.target.value))}
+          autoComplete='off'
+          type='number'
+          value={perLimit}
         />
         <TextField
-          // style={{ marginTop: '5px' }}
           id='standard-basic'
           label='Category'
           variant='standard'
+          onChange={(e) => setCatagory(e.target.value)}
+          value={catagory}
+          autoComplete='off'
         />
         <ToggleButtonGroup
           fullWidth
@@ -92,15 +122,10 @@ export default function Drawer() {
           <ToggleButton value='standard'>standard</ToggleButton>
           <ToggleButton value='stickers'>stickers</ToggleButton>
         </ToggleButtonGroup>
-        <Button
-          // style={{ marginTop: '5px' }}
-          fullWidth
-          variant='outlined'
-          onClick={toggleDrawer(anchor, false)}>
+        <Button fullWidth variant='outlined' onClick={handleClearFilter}>
           Clear Filter
         </Button>
         <Button
-          // style={{ marginTop: '5px' }}
           fullWidth
           variant='outlined'
           onClick={() => handleFilter(anchor, false)}>
@@ -111,7 +136,7 @@ export default function Drawer() {
   )
 
   return (
-    <div>
+    <div className={styles.drawerContainer}>
       {(['left'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>

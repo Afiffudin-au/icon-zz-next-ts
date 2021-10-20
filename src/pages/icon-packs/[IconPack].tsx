@@ -13,8 +13,8 @@ import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 
-function IconPack({ iconPacks, tokenResult, page }: any) {
-  const [pageNumber, setPageNumber] = useState<number>(page || 1)
+function IconPack({ iconPacks, tokenResult, pageProp }: any) {
+  const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const handlePagenation = (page: number) => {
@@ -36,11 +36,12 @@ function IconPack({ iconPacks, tokenResult, page }: any) {
       })
     )
   }, [])
+  console.log(typeof pageProp)
   return (
     <div>
       <NavigationBar />
       <SearchBar />
-      {/* <GridContainer>
+      <GridContainer>
         {iconPacks?.data?.map((item: IconPacksItems, index: number) => (
           <CardIconPacks
             key={item.id}
@@ -52,10 +53,13 @@ function IconPack({ iconPacks, tokenResult, page }: any) {
         ))}
       </GridContainer>
       {iconPacks?.data.length !== 0 ? (
-        <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+        <Pagenation
+          handlePagenation={handlePagenation}
+          page={parseInt(pageProp)}
+        />
       ) : (
         <SearchAlert />
-      )} */}
+      )}
       <Drawer />
     </div>
   )
@@ -63,8 +67,21 @@ function IconPack({ iconPacks, tokenResult, page }: any) {
 
 export default IconPack
 export const getServerSideProps = async (context: any) => {
-  const page = context.query.page || 1
   const key = context.params.IconPack
+  const pageProp = context.query.page || 1
+  const params = {
+    page: context.query.page || 1,
+    limit: context.query.limit || 30,
+    categoryName: context.query.catagory,
+    color: context.query.color,
+    iconType: context.query.iconType,
+  }
+
+  if (params.limit === '') delete params.limit
+  if (params.page === '') delete params.page
+  if (params.categoryName === '') delete params.categoryName
+  if (params.color === '') delete params.color
+  if (params.iconType === '') delete params.iconType
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -80,6 +97,7 @@ export const getServerSideProps = async (context: any) => {
       return err
     })
   console.log(key)
+
   const iconPacks = await axios({
     method: 'get',
     headers: {
@@ -87,7 +105,7 @@ export const getServerSideProps = async (context: any) => {
       Authorization: 'Bearer ' + tokenResult.data.token,
     },
     url: 'https://api.flaticon.com/v2/items/packs/priority',
-    params: { limit: 30, page: page },
+    params: params,
   })
     .then((res) => {
       return res.data
@@ -99,7 +117,7 @@ export const getServerSideProps = async (context: any) => {
     props: {
       iconPacks,
       tokenResult,
-      page,
+      pageProp,
       key,
     },
   }

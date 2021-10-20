@@ -11,8 +11,8 @@ import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
-function SearchPack({ iconPacks, page, tokenResult }: any) {
-  const [pageNumber, setPageNumber] = useState<number>(page || 1)
+function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
+  const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const handlePagenation = (page: number) => {
@@ -51,7 +51,10 @@ function SearchPack({ iconPacks, page, tokenResult }: any) {
         ))}
       </GridContainer>
       {iconPacks?.data.length !== 0 ? (
-        <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+        <Pagenation
+          handlePagenation={handlePagenation}
+          page={parseInt(pageProp)}
+        />
       ) : (
         <SearchAlert />
       )}
@@ -62,7 +65,7 @@ function SearchPack({ iconPacks, page, tokenResult }: any) {
 export default SearchPack
 export const getServerSideProps = async (context: any) => {
   const query = context.params.query
-  const page = context.query.page || 1
+  const pageProp = context.query.page || 1
   const limit = context.query.limit || 30
   const key = query
   const tokenResult = await axios({
@@ -88,7 +91,7 @@ export const getServerSideProps = async (context: any) => {
     url: 'https://api.flaticon.com/v2/search/packs',
     params: {
       q: query,
-      page: page,
+      page: pageProp,
       limit: limit,
     },
   })
@@ -99,6 +102,6 @@ export const getServerSideProps = async (context: any) => {
       return err
     })
   return {
-    props: { key, iconPacks, page, tokenResult },
+    props: { key, iconPacks, pageProp, tokenResult },
   }
 }

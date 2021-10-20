@@ -12,8 +12,8 @@ import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 
-function UiIcon({ page, tokenResult, dataIcons }: any) {
-  const [pageNumber, setPageNumber] = useState<number>(page || 1)
+function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
+  const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const handlePagenation = (page: number) => {
@@ -52,7 +52,10 @@ function UiIcon({ page, tokenResult, dataIcons }: any) {
         ))}
       </GridContainerIcon>
       {dataIcons?.data.length !== 0 ? (
-        <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+        <Pagenation
+          handlePagenation={handlePagenation}
+          page={parseInt(pageProp)}
+        />
       ) : (
         <SearchAlert />
       )}
@@ -62,7 +65,7 @@ function UiIcon({ page, tokenResult, dataIcons }: any) {
 
 export default UiIcon
 export const getServerSideProps = async (context: any) => {
-  const page = context.query.page || 1
+  const pageProp = context.query.page || 1
   const limit = context.query.limit || 30
   const tokenResult = await axios({
     method: 'post',
@@ -87,7 +90,7 @@ export const getServerSideProps = async (context: any) => {
     url: 'https://api.flaticon.com/v2/items/icons/priority',
     params: {
       limit: limit,
-      page: page,
+      page: pageProp,
     },
   })
     .then((res) => {
@@ -98,7 +101,7 @@ export const getServerSideProps = async (context: any) => {
     })
   return {
     props: {
-      page,
+      pageProp,
       tokenResult,
       dataIcons,
     },

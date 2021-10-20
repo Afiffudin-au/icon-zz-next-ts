@@ -12,8 +12,8 @@ import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 
-function SearchIcon({ page, tokenResult, dataIcons }: any) {
-  const [pageNumber, setPageNumber] = useState<number>(page || 1)
+function SearchIcon({ pageProp, tokenResult, dataIcons }: any) {
+  const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
   const handlePagenation = (page: number) => {
@@ -53,7 +53,10 @@ function SearchIcon({ page, tokenResult, dataIcons }: any) {
         ))}
       </GridContainerIcon>
       {dataIcons?.data.length !== 0 ? (
-        <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+        <Pagenation
+          handlePagenation={handlePagenation}
+          page={parseInt(pageProp)}
+        />
       ) : (
         <SearchAlert />
       )}
@@ -64,7 +67,7 @@ function SearchIcon({ page, tokenResult, dataIcons }: any) {
 export default SearchIcon
 export const getServerSideProps = async (context: any) => {
   const query = context.params.query
-  const page = context.query.page || 1
+  const pageProp = context.query.page || 1
   const limit = context.query.limit || 30
   const key = query
   const tokenResult = await axios({
@@ -91,7 +94,7 @@ export const getServerSideProps = async (context: any) => {
     params: {
       q: query,
       limit: limit,
-      page: page,
+      page: pageProp,
     },
   })
     .then((res) => {
@@ -102,7 +105,7 @@ export const getServerSideProps = async (context: any) => {
     })
   return {
     props: {
-      page,
+      pageProp,
       tokenResult,
       dataIcons,
       key,

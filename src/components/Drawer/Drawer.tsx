@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Button from '@mui/material/Button'
-
 import { TextField, useMediaQuery } from '@mui/material'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
@@ -54,7 +53,6 @@ export default function Drawer() {
     query.catagory = catagory || ''
     query.color = alignmentColorType
     query.iconType = alignmentIconType
-    // delete query.iconType
     if (query.catagory === '') delete query.catagory
     if (query.color === null) delete query.color
     if (query.iconType === null) delete query.iconType
@@ -134,7 +132,6 @@ export default function Drawer() {
       </Box>
     </Box>
   )
-
   return (
     <div className={styles.drawerContainer}>
       {(['left'] as const).map((anchor) => (

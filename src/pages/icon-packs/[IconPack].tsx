@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import SearchAlert from '../../components/Alert/Warning/SearchAlert'
 import CardIconPacks from '../../components/CardIconPack/CardIconPack'
-import Drawer from '../../components/Drawer/Drawer'
+import Drawer from '../../components/Drawers/DrawerForIconPacks/Drawer/Drawer'
 import GridContainer from '../../components/GridContainer/GridContainer'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import Pagenation from '../../components/Pagenation/Pagenation'
@@ -27,7 +27,6 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
       pathname: path,
       query,
     })
-    console.log(page)
   }
   useEffect(() => {
     dispatch(
@@ -36,11 +35,11 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
       })
     )
   }, [])
-  console.log(typeof pageProp)
   return (
     <div>
       <NavigationBar />
       <SearchBar />
+      <Drawer />
       <GridContainer>
         {iconPacks?.data?.map((item: IconPacksItems, index: number) => (
           <CardIconPacks
@@ -60,7 +59,6 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
       ) : (
         <SearchAlert />
       )}
-      <Drawer />
     </div>
   )
 }

@@ -54,8 +54,8 @@ export default function Drawer() {
     query.color = alignmentColorType
     query.iconType = alignmentIconType
     if (query.catagory === '') delete query.catagory
-    if (query.color === null) delete query.color
-    if (query.iconType === null) delete query.iconType
+    if (query.color === null || query.color === '') delete query.color
+    if (query.iconType === null || query.iconType === '') delete query.iconType
     console.log(query.color)
     router.push({
       pathname: path,
@@ -136,7 +136,9 @@ export default function Drawer() {
     <div className={styles.drawerContainer}>
       {(['left'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Button variant='outlined' onClick={toggleDrawer(anchor, true)}>
+            Filter
+          </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}

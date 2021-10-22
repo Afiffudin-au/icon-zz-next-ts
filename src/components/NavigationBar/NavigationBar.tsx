@@ -9,10 +9,10 @@ function NavigationBar() {
   const [hamburgerIcon, setHamburgerIcon] = useState<boolean>(false)
   const router = useRouter()
   const linkToPacks = () => {
-    router.push('/icon-packs/icon-pack')
+    router.push('/icon-packs/icon-pack', undefined, { shallow: true })
   }
   const linkToUiIcons = () => {
-    router.push('/ui-icons/ui-icon')
+    router.push('/ui-icons/ui-icon', undefined, { shallow: true })
   }
   return (
     <Navbar className={nav.navbar} expand='sm' sticky='top'>

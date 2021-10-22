@@ -76,7 +76,6 @@ export const getServerSideProps = async (context: any) => {
     color: context.query.color,
     iconType: context.query.iconType,
   }
-  if (params.q === '') delete params.q
   if (params.limit === '') delete params.limit
   if (params.page === '') delete params.page
   if (params.categoryName === '') delete params.categoryName

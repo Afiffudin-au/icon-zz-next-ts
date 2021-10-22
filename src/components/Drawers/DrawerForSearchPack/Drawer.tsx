@@ -16,7 +16,7 @@ export default function Drawer() {
   const [perLimit, setPerLimit] = useState<any>(router.query.limit || 30)
   const [catagory, setCatagory] = useState<string>('')
   const [searchQuery, setSearchQuery] = useState<any>(router.query.query || '')
-  const [errorSearchQuery, setErrorSearchQuery] = useState<boolan>(false)
+  const [errorSearchQuery, setErrorSearchQuery] = useState<boolean>(false)
   const handleChangeColorType = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string

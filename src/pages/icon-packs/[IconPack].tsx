@@ -12,7 +12,6 @@ import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
-
 function IconPack({ iconPacks, tokenResult, pageProp }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
@@ -74,7 +73,6 @@ export const getServerSideProps = async (context: any) => {
     color: context.query.color,
     iconType: context.query.iconType,
   }
-
   if (params.limit === '') delete params.limit
   if (params.page === '') delete params.page
   if (params.categoryName === '') delete params.categoryName
@@ -94,8 +92,6 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
-  console.log(key)
-
   const iconPacks = await axios({
     method: 'get',
     headers: {

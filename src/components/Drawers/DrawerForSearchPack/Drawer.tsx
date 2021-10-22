@@ -16,6 +16,7 @@ export default function Drawer() {
   const [perLimit, setPerLimit] = useState<any>(router.query.limit || 30)
   const [catagory, setCatagory] = useState<string>('')
   const [searchQuery, setSearchQuery] = useState<any>(router.query.query || '')
+  const [errorSearchQuery, setErrorSearchQuery] = useState<boolan>(false)
   const handleChangeColorType = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string
@@ -49,12 +50,19 @@ export default function Drawer() {
     toggleDrawer(anchor, condition)
     const path = router.pathname
     const query: any = router.query
-    query.query = searchQuery
+    const userText = searchQuery.replace(/^\s+/, '').replace(/\s+$/, '')
     query.page = perPage || 1
     query.limit = perLimit || 30
     query.catagory = catagory || ''
     query.color = alignmentColorType
     query.iconType = alignmentIconType
+    if (userText === '') {
+      setErrorSearchQuery(true)
+      return
+    } else {
+      setErrorSearchQuery(false)
+    }
+    query.query = userText
     if (query.catagory === '') delete query.catagory
     if (query.query === '') delete query.query
     if (query.color === null || query.color === '') delete query.color
@@ -86,6 +94,8 @@ export default function Drawer() {
           onChange={(e) => setSearchQuery(e.target.value)}
           value={searchQuery}
           autoComplete='off'
+          error={errorSearchQuery ? true : false}
+          helperText={errorSearchQuery ? 'This field cannot be empty!' : null}
         />
         <TextField
           id='standard-basic'

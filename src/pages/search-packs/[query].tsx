@@ -27,7 +27,6 @@ function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
       pathname: path,
       query,
     })
-    console.log(query)
   }
   useEffect(() => {
     dispatch(
@@ -40,6 +39,7 @@ function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
     <div>
       <NavigationBar />
       <SearchBar />
+      <Drawer />
       <GridContainer>
         {iconPacks?.data?.map((item: IconPacksItems, index: number) => (
           <CardIconPacks
@@ -59,7 +59,6 @@ function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
       ) : (
         <SearchAlert />
       )}
-      <Drawer />
     </div>
   )
 }

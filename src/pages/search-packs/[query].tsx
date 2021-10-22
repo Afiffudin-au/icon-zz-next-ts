@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import SearchAlert from '../../components/Alert/Warning/SearchAlert'
 import CardIconPacks from '../../components/CardIconPack/CardIconPack'
+import Drawer from '../../components/Drawers/DrawerForSearchPack/Drawer'
 import GridContainer from '../../components/GridContainer/GridContainer'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import Pagenation from '../../components/Pagenation/Pagenation'
@@ -58,6 +59,7 @@ function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
       ) : (
         <SearchAlert />
       )}
+      <Drawer />
     </div>
   )
 }
@@ -66,8 +68,21 @@ export default SearchPack
 export const getServerSideProps = async (context: any) => {
   const query = context.params.query
   const pageProp = context.query.page || 1
-  const limit = context.query.limit || 30
   const key = query
+  const params = {
+    q: context.query.query,
+    page: context.query.page || 1,
+    limit: context.query.limit || 30,
+    categoryName: context.query.catagory,
+    color: context.query.color,
+    iconType: context.query.iconType,
+  }
+  if (params.q === '') delete params.q
+  if (params.limit === '') delete params.limit
+  if (params.page === '') delete params.page
+  if (params.categoryName === '') delete params.categoryName
+  if (params.color === '') delete params.color
+  if (params.iconType === '') delete params.iconType
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -89,11 +104,7 @@ export const getServerSideProps = async (context: any) => {
       Authorization: 'Bearer ' + tokenResult.data.token,
     },
     url: 'https://api.flaticon.com/v2/search/packs',
-    params: {
-      q: query,
-      page: pageProp,
-      limit: limit,
-    },
+    params: params,
   })
     .then((res) => {
       return res.data

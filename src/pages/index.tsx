@@ -107,6 +107,7 @@ export const getServerSideProps = async (context: any) => {
       params: {
         page: page,
         limit: limit,
+        color: 2,
       },
     })
       .then((res) => {

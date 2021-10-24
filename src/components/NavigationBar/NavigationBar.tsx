@@ -16,7 +16,11 @@ function NavigationBar() {
   }
   return (
     <Navbar className={nav.navbar} expand='sm' sticky='top'>
-      <Navbar.Brand className={nav.brand} href='/'>
+      <Navbar.Brand
+        className={nav.brand}
+        onClick={() => {
+          router.push('/')
+        }}>
         ZZ - icons
       </Navbar.Brand>
       <Navbar.Toggle className={nav.toggle} aria-controls='basic-navbar-nav'>

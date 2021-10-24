@@ -69,7 +69,6 @@ export default UiIcon
 export const getServerSideProps = async (context: any) => {
   const key = context.params['ui-icon']
   const pageProp = context.query.page || 1
-  const limit = context.query.limit || 30
   const params = {
     page: context.query.page || 1,
     limit: context.query.limit || 30,

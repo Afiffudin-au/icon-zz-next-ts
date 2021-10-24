@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import SearchAlert from '../../components/Alert/Warning/SearchAlert'
 import CardIcon from '../../components/CardIcon/CardIcon'
+import Drawer from '../../components/Drawers/DrawerForSearchIcon/Drawer'
 import GridContainerIcon from '../../components/GridContainerIcon/GridContainerIcon'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import Pagenation from '../../components/Pagenation/Pagenation'
@@ -35,11 +36,11 @@ function SearchIcon({ pageProp, tokenResult, dataIcons }: any) {
       })
     )
   }, [])
-  console.log(dataIcons?.data.length)
   return (
     <div>
       <NavigationBar />
       <SearchBar />
+      <Drawer />
       <GridContainerIcon>
         {dataIcons?.data?.map((item: IconItems, index: number) => (
           <CardIcon
@@ -68,8 +69,16 @@ export default SearchIcon
 export const getServerSideProps = async (context: any) => {
   const query = context.params.query
   const pageProp = context.query.page || 1
-  const limit = context.query.limit || 30
   const key = query
+  const params = {
+    q: context.query.query,
+    page: context.query.page || 1,
+    limit: context.query.limit || 30,
+    categoryName: context.query.catagory,
+    color: context.query.color,
+    iconType: context.query.iconType,
+    stroke: context.query.strokeType,
+  }
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -91,11 +100,7 @@ export const getServerSideProps = async (context: any) => {
       Authorization: 'Bearer ' + tokenResult.data.token,
     },
     url: 'https://api.flaticon.com/v2/items/icons/priority',
-    params: {
-      q: query,
-      limit: limit,
-      page: pageProp,
-    },
+    params: params,
   })
     .then((res) => {
       return res.data

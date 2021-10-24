@@ -92,6 +92,7 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
+  console.log(context.params)
   const iconPacks = await axios({
     method: 'get',
     headers: {

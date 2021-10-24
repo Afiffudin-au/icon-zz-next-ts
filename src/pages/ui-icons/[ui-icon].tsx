@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import SearchAlert from '../../components/Alert/Warning/SearchAlert'
 import CardIcon from '../../components/CardIcon/CardIcon'
+import Drawer from '../../components/Drawers/DrawerForUiIcon/Drawer'
 import GridContainerIcon from '../../components/GridContainerIcon/GridContainerIcon'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 import Pagenation from '../../components/Pagenation/Pagenation'
@@ -39,6 +40,7 @@ function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
     <div>
       <NavigationBar />
       <SearchBar />
+      <Drawer />
       <GridContainerIcon>
         {dataIcons?.data?.map((item: IconItems, index: number) => (
           <CardIcon
@@ -65,8 +67,17 @@ function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
 
 export default UiIcon
 export const getServerSideProps = async (context: any) => {
+  const key = context.params['ui-icon']
   const pageProp = context.query.page || 1
   const limit = context.query.limit || 30
+  const params = {
+    page: context.query.page || 1,
+    limit: context.query.limit || 30,
+    categoryName: context.query.catagory,
+    color: context.query.color,
+    iconType: context.query.iconType,
+    stroke: context.query.strokeType,
+  }
   const tokenResult = await axios({
     method: 'post',
     headers: headers,
@@ -81,6 +92,7 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
+  console.log(key)
   const dataIcons = await axios({
     method: 'get',
     headers: {
@@ -88,10 +100,7 @@ export const getServerSideProps = async (context: any) => {
       Authorization: 'Bearer ' + tokenResult.data.token,
     },
     url: 'https://api.flaticon.com/v2/items/icons/priority',
-    params: {
-      limit: limit,
-      page: pageProp,
-    },
+    params,
   })
     .then((res) => {
       return res.data
@@ -103,6 +112,7 @@ export const getServerSideProps = async (context: any) => {
     props: {
       pageProp,
       tokenResult,
+      key,
       dataIcons,
     },
   }

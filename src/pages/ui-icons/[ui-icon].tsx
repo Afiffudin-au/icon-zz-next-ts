@@ -73,7 +73,7 @@ export const getServerSideProps = async (context: any) => {
     page: context.query.page || 1,
     limit: context.query.limit || 30,
     categoryName: context.query.catagory,
-    color: context.query.color,
+    color: context.query.color || 2,
     iconType: context.query.iconType,
     stroke: context.query.strokeType,
   }

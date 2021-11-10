@@ -45,8 +45,8 @@ function CardIconPacks({
               placeholder='blur'
               src={image}
               alt={description}
-              width='100%'
-              height='100%'
+              width={300}
+              height={300}
               objectFit='contain'
               layout='responsive'
               quality={100}

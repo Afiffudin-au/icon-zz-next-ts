@@ -73,8 +73,8 @@ function ModalDetailIcon({ handleClose, iconId }: any) {
                 blurDataURL='/e8e8e8.png'
                 placeholder='blur'
                 alt={data?.description}
-                width='100%'
-                height='100%'
+                width={300}
+                height={300}
                 objectFit='fill'
                 layout='responsive'
                 quality={100}

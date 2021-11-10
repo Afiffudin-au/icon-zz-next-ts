@@ -50,9 +50,9 @@ function CardIcon({
               alt={description}
               blurDataURL='/e8e8e8.png'
               placeholder='blur'
+              width={64}
+              height={64}
               layout='responsive'
-              width='100%'
-              height='100%'
               objectFit='contain'
               quality={100}
             />

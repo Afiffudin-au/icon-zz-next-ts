@@ -53,12 +53,12 @@ function ModalDetailPack({ handleClose }: any) {
           <div className={styles.wrap}>
             <div className={styles.imageBox}>
               <Image
-                alt=''
+                alt={data?.description}
                 src={data?.images?.sprite || '/e8e8e8.png'}
                 objectFit='cover'
                 layout='responsive'
-                width='200px'
-                height='200px'
+                width={300}
+                height={300}
               />
             </div>
             <div className={styles.content1}>

@@ -11,6 +11,7 @@ import SearchBar from '../../components/SearchBar/SearchBar'
 import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
+import Head from 'next/head'
 import { addToken } from '../../redux/features/icon/iconSlice'
 function IconPack({ iconPacks, tokenResult, pageProp }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
@@ -36,6 +37,27 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
   }, [])
   return (
     <div>
+      <Head>
+        <title>Icon Packs : IconZzTs</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta
+          name='description'
+          content={`Check out this fantastic collection of icon packs, with ${iconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
+        />
+        <meta property='og:title' content='Awesome icon packs - IconZzTs' />
+        <meta
+          property='og:url'
+          content='https://icon-zz-ts.vercel.app/icon-packs/icon-pack'
+        />
+        <meta property='og:site_name' content='IconZzTs' />
+        <meta property='og:image' content={iconPacks.data[0].images.sprite} />
+        <meta property='og:image:alt' content='Icon packs' />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:description'
+          content={`Check out this fantastic collection of icon packs, with ${iconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
+        />
+      </Head>
       <NavigationBar />
       <SearchBar />
       <Drawer />

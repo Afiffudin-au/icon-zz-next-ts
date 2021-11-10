@@ -12,7 +12,8 @@ import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
-function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
+import Head from 'next/head'
+function SearchPack({ iconPacks, pageProp, tokenResult, query }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -37,6 +38,27 @@ function SearchPack({ iconPacks, pageProp, tokenResult }: any) {
   }, [])
   return (
     <div>
+      <Head>
+        <title>Search Packs : {query} - IconZzTs</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta
+          name='description'
+          content={`Check out this fantastic collection of icon packs, with ${iconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
+        />
+        <meta property='og:title' content='Awesome icon packs - IconZzTs' />
+        <meta
+          property='og:url'
+          content={`https://icon-zz-ts.vercel.app/icon-packs/${query} - IconZzTs`}
+        />
+        <meta property='og:site_name' content='IconZzTs' />
+        <meta property='og:image' content={iconPacks.data[0].images.sprite} />
+        <meta property='og:image:alt' content='Search icon packs' />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:description'
+          content={`Check out this fantastic collection of icon packs, with ${iconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
+        />
+      </Head>
       <NavigationBar />
       <SearchBar />
       <Drawer />
@@ -111,6 +133,6 @@ export const getServerSideProps = async (context: any) => {
       return err
     })
   return {
-    props: { key, iconPacks, pageProp, tokenResult },
+    props: { key, iconPacks, pageProp, tokenResult, query },
   }
 }

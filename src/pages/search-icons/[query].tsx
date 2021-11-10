@@ -12,8 +12,8 @@ import { headers } from '../../headers'
 import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
-
-function SearchIcon({ pageProp, tokenResult, dataIcons }: any) {
+import Head from 'next/head'
+function SearchIcon({ pageProp, tokenResult, dataIcons, query }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -36,8 +36,30 @@ function SearchIcon({ pageProp, tokenResult, dataIcons }: any) {
       })
     )
   }, [])
+  console.log(dataIcons)
   return (
     <div>
+      <Head>
+        <title>Icons Search : {query} - IconZzTs</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta
+          name='description'
+          content={`Check out this fantastic collection of icons, with ${dataIcons.data.length} icons for your desktop, phone tablet, and design.`}
+        />
+        <meta property='og:title' content='Awesome icons - IconZzTs' />
+        <meta
+          property='og:url'
+          content={`https://icon-zz-ts.vercel.app/search-icons/${query} - IconZzTs`}
+        />
+        <meta property='og:site_name' content='IconZzTs' />
+        <meta property='og:image' content={dataIcons.data[0].images.png[128]} />
+        <meta property='og:image:alt' content='Icons Search' />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:description'
+          content={`Check out this fantastic collection of icons, with ${dataIcons.data.length} icons for your desktop, phone tablet, and design.`}
+        />
+      </Head>
       <NavigationBar />
       <SearchBar />
       <Drawer />
@@ -114,6 +136,7 @@ export const getServerSideProps = async (context: any) => {
       tokenResult,
       dataIcons,
       key,
+      query,
     },
   }
 }

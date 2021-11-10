@@ -36,11 +36,29 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
       })
     )
   }, [])
-
+  console.log(IconPacks.data[0].images.sprite)
   return (
     <div className={styles.container}>
       <Head>
         <title>Icon zz ts</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta
+          name='description'
+          content={`Check out this fantastic collection of icon packs, with ${IconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
+        />
+        <meta property='og:title' content='Awesome icon packs - IconZzTs' />
+        <meta
+          property='og:url'
+          content='https://icon-zz-ts.vercel.app/icon-packs/icon-pack'
+        />
+        <meta property='og:site_name' content='IconZzTs' />
+        <meta property='og:image' content={IconPacks.data[0].images.sprite} />
+        <meta property='og:image:alt' content='Icon packs' />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:description'
+          content={`Check out this fantastic collection of icon packs, with ${IconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
+        />
       </Head>
       <NavigationBar />
       <Banner totalIcons={totalIcons} />
@@ -61,6 +79,7 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
   )
 }
 export const getServerSideProps = async (context: any) => {
+  console.log(context)
   const page = context.query.page || 1
   const limit = context.query.limit || 20
   const tokenResult = await axios({

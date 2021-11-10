@@ -12,7 +12,7 @@ import { headers } from '../../headers'
 import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
-
+import Head from 'next/head'
 function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
@@ -38,6 +38,27 @@ function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
   }, [])
   return (
     <div>
+      <Head>
+        <title>UI Icons : IconZzTs</title>
+        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta
+          name='description'
+          content={`Check out this fantastic collection of icons, with ${dataIcons.data.length} icons for your desktop, phone tablet, and design.`}
+        />
+        <meta property='og:title' content='Awesome icons - IconZzTs' />
+        <meta
+          property='og:url'
+          content={`https://icon-zz-ts.vercel.app/ui-icons/ui-icon - IconZzTs`}
+        />
+        <meta property='og:site_name' content='IconZzTs' />
+        <meta property='og:image' content={dataIcons.data[0].images.png[128]} />
+        <meta property='og:image:alt' content='UI Icons' />
+        <meta property='og:type' content='website' />
+        <meta
+          property='og:description'
+          content={`Check out this fantastic collection of icons, with ${dataIcons.data.length} icons for your desktop, phone tablet, and design.`}
+        />
+      </Head>
       <NavigationBar />
       <SearchBar />
       <Drawer />

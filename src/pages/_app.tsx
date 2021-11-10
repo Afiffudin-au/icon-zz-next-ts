@@ -6,6 +6,7 @@ import ProgressBar from '@badrap/bar-of-progress'
 import Router from 'next/router'
 import { Provider } from 'react-redux'
 import { store } from '../redux/app/store'
+import Head from 'next/head'
 const progress = new ProgressBar({
   size: 4,
   color: '#ff0f0f',

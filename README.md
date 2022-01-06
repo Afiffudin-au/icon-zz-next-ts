@@ -18,6 +18,9 @@ Versi ini memiliki sedikit beberapa peningkatan :
 2. penambahan filter
 3. Performa
 
+## Note
+Most of my projects are of the private type, but for now and so on I will make my projects public freely.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -47,7 +47,6 @@ function ModalDetailIcon({ handleClose, iconId }: any) {
     router.push(`/search-icons/${tag}`)
   }
   const handleDownloadIcon = () => {
-    console.log(format + ' Size : ' + size)
     if (format === '' || size === '') {
       alert('Please Select Format And Size')
       return
@@ -118,14 +117,6 @@ function ModalDetailIcon({ handleClose, iconId }: any) {
                     type='radio'
                     name='radio'
                     onClick={() => setFormat('png')}
-                  />
-                </label>
-                <label htmlFor='select-type'>
-                  Svg
-                  <input
-                    type='radio'
-                    name='radio'
-                    onClick={() => setFormat('svg')}
                   />
                 </label>
               </div>

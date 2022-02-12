@@ -36,7 +36,6 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
       })
     )
   }, [])
-  console.log(IconPacks.data[0].images.sprite)
   return (
     <div className={styles.container}>
       <Head>
@@ -79,7 +78,6 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
   )
 }
 export const getServerSideProps = async (context: any) => {
-  console.log(context)
   const page = context.query.page || 1
   const limit = context.query.limit || 20
   const tokenResult = await axios({

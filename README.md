@@ -1,5 +1,5 @@
 ## Flaticon API KEY
-REACT_APP_API_KEY="ca2c8eaa716daa7e86183414514d714eea55fcc2"
+REACT_APP_API_KEY="8cb73d756e635cdb125ac4d731806a0dc63af11e"
 
 ## Description english
 

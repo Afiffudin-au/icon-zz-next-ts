@@ -4,12 +4,20 @@ import SearchIcon from '@mui/icons-material/Search'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import RadioButtonsGroup from '../RadioButtonsGroup/RadioButtonsGroup'
 import { useRouter } from 'next/router'
+import { useAppSelector } from '../../../redux/app/hooks'
+import { selectTokenBlocks } from '../../../redux/features/icon/iconSlice'
+import { useGetAutoSearchIcon } from '../../../hooks/useGetAutoSearchIcon/useGetAutoSearchIcon'
+import { CircularProgress } from '@mui/material'
+import { DebounceInput } from 'react-debounce-input';
+import Link from 'next/link'
 function SearchBanner() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
-  const [query, setQuery] = useState<string>('')
+  const { token } = useAppSelector(selectTokenBlocks)
+  const { getAutoSearchIcon, keywords, isLoading } = useGetAutoSearchIcon()
   const router = useRouter()
+
   const handleCheck = (type: string) => {
     setIsChecked(!isChecked)
     setTypeToSearch(type)
@@ -20,17 +28,16 @@ function SearchBanner() {
   }
   const handleSearch = (e: any) => {
     e.preventDefault()
-    const userText = query.replace(/^\s+/, '').replace(/\s+$/, '')
-    if (userText === '') {
-      return
-    }
+    const query = e.target.value || ''
     if (typeToSearch === 'icons') {
-      router.push(`/search-icons/${query}`)
+      getAutoSearchIcon(token, query, 10)
+      // router.push(`/search-icons/${query}`)
     }
     if (typeToSearch === 'packs') {
-      router.push(`/search-packs/${query}`)
+      // router.push(`/search-packs/${query}`)
     }
   }
+  console.log(keywords)
   return (
     <>
       <form onSubmit={handleSearch} className={style.searchBanner} action='/'>
@@ -49,17 +56,31 @@ function SearchBanner() {
               />
             )}
           </div>
-          <input
-            onChange={(e) => setQuery(e.target.value)}
+          <DebounceInput
+            debounceTimeout={400}
+            onChange={handleSearch}
             className={style.searchInput}
             type='text'
           />
+          {
+            isLoading && <CircularProgress />
+          }
           <div onClick={handleSearch} className={style.searchButton}>
             <div>
               <SearchIcon style={{ color: 'white' }} />
             </div>
           </div>
         </div>
+        {
+          keywords.length > 0 && <article className={style.suggestions}>
+            {keywords?.map((item: any, index: number) => (
+              <div key={item} className={style.keywordItem}>
+                <Link href={`/search-icons/${item}`}>{item}</Link>
+              </div>
+            ))}
+          </article>
+        }
+
       </form>
     </>
   )

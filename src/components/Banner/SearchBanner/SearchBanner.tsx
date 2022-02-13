@@ -10,12 +10,14 @@ import { useGetAutoSearchIcon } from '../../../hooks/useGetAutoSearchIcon/useGet
 import { CircularProgress } from '@mui/material'
 import { DebounceInput } from 'react-debounce-input';
 import Link from 'next/link'
+import { LoadingLinear } from '../../Progress/LoadingLinear/LoadingLinear'
 function SearchBanner() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const { token } = useAppSelector(selectTokenBlocks)
   const { getAutoSearchIcon, keywords, isLoading } = useGetAutoSearchIcon()
+  const [query, setQuery] = useState<string>('')
   const router = useRouter()
 
   const handleCheck = (type: string) => {
@@ -26,21 +28,37 @@ function SearchBanner() {
   const handleOpen = () => {
     setIsOpenMenu(!isOpenMenu)
   }
-  const handleSearch = (e: any) => {
+  const handleClickSearch = (e: any) => {
     e.preventDefault()
-    const query = e.target.value || ''
+    const userText = query.replace(/^\s+/, '').replace(/\s+$/, '')
+    if (userText === '') {
+      return
+    }
     if (typeToSearch === 'icons') {
-      getAutoSearchIcon(token, query, 10)
-      // router.push(`/search-icons/${query}`)
+      router.push(`/search-icons/${query}`)
     }
     if (typeToSearch === 'packs') {
-      // router.push(`/search-packs/${query}`)
+      router.push(`/search-packs/${query}`)
     }
   }
-  console.log(keywords)
+  const onChangeSearch = (e: any) => {
+    e.preventDefault()
+    setQuery(e.target.value)
+    const query = e.target.value || ''
+    console.log(e.target.value)
+    if (typeToSearch === 'icons') {
+      getAutoSearchIcon(token, query, 10)
+    }
+    // if (typeToSearch === 'packs') {
+
+    // }
+  }
+  const test = () => {
+
+  }
   return (
     <>
-      <form onSubmit={handleSearch} className={style.searchBanner} action='/'>
+      <form onSubmit={handleClickSearch} className={style.searchBanner} action='/'>
         <div className={style.searchBar}>
           <div className={style.dropdownWrap}>
             <div className={style.dropdown} onClick={handleOpen}>
@@ -57,25 +75,32 @@ function SearchBanner() {
             )}
           </div>
           <DebounceInput
-            debounceTimeout={400}
-            onChange={handleSearch}
+            forceNotifyByEnter
+            value={query}
+            debounceTimeout={1500}
+            onChange={onChangeSearch}
             className={style.searchInput}
             type='text'
           />
-          {
-            isLoading && <CircularProgress />
-          }
-          <div onClick={handleSearch} className={style.searchButton}>
+
+          <div onClick={handleClickSearch} className={style.searchButton}>
             <div>
               <SearchIcon style={{ color: 'white' }} />
             </div>
           </div>
         </div>
         {
+          isLoading && <LoadingLinear />
+        }
+        {
           keywords.length > 0 && <article className={style.suggestions}>
             {keywords?.map((item: any, index: number) => (
               <div key={item} className={style.keywordItem}>
-                <Link href={`/search-icons/${item}`}>{item}</Link>
+                <Link href={`/search-icons/${item}`}>
+                  <a>
+                    <p className={style.title}>{item}</p>
+                  </a>
+                </Link>
               </div>
             ))}
           </article>

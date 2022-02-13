@@ -36,10 +36,9 @@ function SearchIcon({ pageProp, tokenResult, dataIcons, query, endOfPage }: any)
       })
     )
   }, [])
-  console.log(dataIcons)
   return (
     <div>
-      {/* <Head>
+      <Head>
         <title>Icons Search : {query} - IconZzTs</title>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         <meta
@@ -75,7 +74,6 @@ function SearchIcon({ pageProp, tokenResult, dataIcons, query, endOfPage }: any)
           />
         ))}
       </GridContainerIcon>
-      */}
       {dataIcons?.data.length !== 0 ? (
         <Pagenation
           endOfPage={endOfPage}

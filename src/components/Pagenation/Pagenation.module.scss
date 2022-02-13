@@ -8,6 +8,10 @@
   .arrowBack {
     @include button();
   }
+  .disabled {
+    background-color: grey !important;
+    color: rgb(216, 216, 216) !important;
+  }
   .pageNumber {
     color: #0277bd;
     font-weight: 600;

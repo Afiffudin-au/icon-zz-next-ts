@@ -13,7 +13,8 @@ import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 import Head from 'next/head'
-function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
+import { pageLimiter } from '../../utils/pageLimiter/pageLimiter'
+function UiIcon({ pageProp, tokenResult, dataIcons, endOfPage }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -23,7 +24,6 @@ function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
     const query: any = router.query
     const path = router.pathname
     query.page = page
-    query.limit = 30
     router.push({
       pathname: path,
       query,
@@ -51,7 +51,7 @@ function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
           content={`https://icon-zz-ts.vercel.app/ui-icons/ui-icon - IconZzTs`}
         />
         <meta property='og:site_name' content='IconZzTs' />
-        <meta property='og:image' content={dataIcons.data[0].images.png[128]} />
+        <meta property='og:image' content={dataIcons?.data[0]?.images.png[128]} />
         <meta property='og:image:alt' content='UI Icons' />
         <meta property='og:type' content='website' />
         <meta
@@ -76,6 +76,7 @@ function UiIcon({ pageProp, tokenResult, dataIcons }: any) {
       </GridContainerIcon>
       {dataIcons?.data.length !== 0 ? (
         <Pagenation
+          endOfPage={endOfPage}
           handlePagenation={handlePagenation}
           page={parseInt(pageProp)}
         />
@@ -112,7 +113,6 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
-  console.log(key)
   const dataIcons = await axios({
     method: 'get',
     headers: {
@@ -128,12 +128,20 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
+  let endOfPage
+  if (parseInt(params.limit) !== dataIcons.metadata.count) {
+    endOfPage = pageLimiter(1, 1)
+  } else {
+    const limitCount = Math.floor(dataIcons.metadata.total / dataIcons.metadata.count)
+    endOfPage = pageLimiter(parseInt(pageProp), limitCount)
+  }
   return {
     props: {
       pageProp,
       tokenResult,
       key,
       dataIcons,
+      endOfPage
     },
   }
 }

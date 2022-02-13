@@ -14,7 +14,6 @@ export const useGetDownloadIcon = ()=>{
         size : size,
       }
     }).then(res=>{
-      console.log(res.data)
       saveAs(res.data, iconName)
     }).catch(err=>{
       alert(err)

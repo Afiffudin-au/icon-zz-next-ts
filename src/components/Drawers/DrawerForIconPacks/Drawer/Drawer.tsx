@@ -33,17 +33,17 @@ export default function Drawer() {
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event &&
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return
+      (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+          event &&
+          event.type === 'keydown' &&
+          ((event as React.KeyboardEvent).key === 'Tab' ||
+            (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+          return
+        }
+        setState({ ...state, [anchor]: open })
       }
-      setState({ ...state, [anchor]: open })
-    }
   const handleFilter = (anchor: any, condition: any) => {
     toggleDrawer(anchor, condition)
     const path = router.pathname
@@ -56,7 +56,6 @@ export default function Drawer() {
     if (query.catagory === '') delete query.catagory
     if (query.color === null || query.color === '') delete query.color
     if (query.iconType === null || query.iconType === '') delete query.iconType
-    console.log(query.color)
     router.push({
       pathname: path,
       query,

@@ -13,7 +13,8 @@ import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
 import Head from 'next/head'
 import { addToken } from '../../redux/features/icon/iconSlice'
-function IconPack({ iconPacks, tokenResult, pageProp }: any) {
+import { pageLimiter } from '../../utils/pageLimiter/pageLimiter'
+function IconPack({ iconPacks, tokenResult, pageProp, endOfPage }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -22,7 +23,7 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
     setPageNumber(page)
     const query: any = router.query
     const path = router.pathname
-    query.page = page
+    query.page = page || 1
     router.push({
       pathname: path,
       query,
@@ -50,7 +51,7 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
           content='https://icon-zz-ts.vercel.app/icon-packs/icon-pack'
         />
         <meta property='og:site_name' content='IconZzTs' />
-        <meta property='og:image' content={iconPacks.data[0].images.sprite} />
+        <meta property='og:image' content={iconPacks?.data[0]?.images.sprite} />
         <meta property='og:image:alt' content='Icon packs' />
         <meta property='og:type' content='website' />
         <meta
@@ -74,6 +75,7 @@ function IconPack({ iconPacks, tokenResult, pageProp }: any) {
       </GridContainer>
       {iconPacks?.data.length !== 0 ? (
         <Pagenation
+          endOfPage={endOfPage}
           handlePagenation={handlePagenation}
           page={parseInt(pageProp)}
         />
@@ -114,7 +116,6 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
-  console.log(context.params)
   const iconPacks = await axios({
     method: 'get',
     headers: {
@@ -130,12 +131,20 @@ export const getServerSideProps = async (context: any) => {
     .catch((err) => {
       return err
     })
+  let endOfPage
+  if (parseInt(params.limit) !== iconPacks.metadata.count) {
+    endOfPage = pageLimiter(1, 1)
+  } else {
+    const limitCount = Math.floor(iconPacks.metadata.total / iconPacks.metadata.count)
+    endOfPage = pageLimiter(parseInt(pageProp), limitCount)
+  }
   return {
     props: {
       iconPacks,
       tokenResult,
       pageProp,
       key,
+      endOfPage
     },
   }
 }

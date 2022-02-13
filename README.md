@@ -1,5 +1,6 @@
-## Flaticon API KEY
-REACT_APP_API_KEY="8cb73d756e635cdb125ac4d731806a0dc63af11e"
+## Flaticon API KEY .env
+REACT_APP_API_KEY="REPLACE_YOUR_PERSONAL_API_KEY_PLEASE"
+For generate new API_KEY Visit : https://api.flaticon.com/
 
 ## Description english
 

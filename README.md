@@ -1,4 +1,8 @@
+## Flaticon API KEY
+REACT_APP_API_KEY="ca2c8eaa716daa7e86183414514d714eea55fcc2"
+
 ## Description english
+
 hello programmers! I have a very simple project that is a project that displays a lot of icons, icon packs and can be downloaded. I'm using the API from flaticon.com for data retrieval for my app. My application was made using nextjs typescript, previously this application was made using reactjs typescript. reactjs typescript version at https://github.com/Afiffudin-au/zz-icon (reactjs version).
 
 This application will present content such as icons, icon packs, search icons, search icon packs, icons pages, icon pack pages, details, filters, pagenation and others. All of it is wrapped using nextjs framework and it has shown very fast performance.

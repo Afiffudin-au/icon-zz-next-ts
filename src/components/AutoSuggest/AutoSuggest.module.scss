@@ -1,0 +1,22 @@
+.suggestions {
+  font-size: 17px;
+  padding: 10px;
+  border-top: 1px solid rgb(204, 204, 204);
+  background-color: #eff3f6;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  .keywordItem {
+    cursor: pointer;
+    padding: 5px;
+    &:hover {
+      background-color: #dfdfdf;
+    }
+    a {
+      text-decoration: none;
+    }
+    .title {
+      margin: 0 !important;
+    }
+  }
+}

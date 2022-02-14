@@ -8,8 +8,7 @@ $defaultHeight: 60px;
     width: 100%;
     align-items: center;
     background-color: #eff3f6;
-    // padding: 10px;
-    border-radius: 5px;
+    // border-radius: 5px;
     .dropdownWrap {
       position: relative;
       .dropdown {
@@ -33,10 +32,11 @@ $defaultHeight: 60px;
     }
     .searchButton {
       cursor: pointer;
-      border-radius: 5px;
+      // border-radius: 5px;
       background-color: #4ad295;
       display: flex;
-      border-radius: 5px;
+      // border-top-left-radius: 5px;
+      // border-top-right-radius: 5px;
       height: 100%;
       align-items: center;
       width: 70px;

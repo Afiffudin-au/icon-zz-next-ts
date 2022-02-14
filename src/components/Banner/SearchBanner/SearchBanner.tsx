@@ -4,10 +4,15 @@ import SearchIcon from '@mui/icons-material/Search'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import RadioButtonsGroup from '../RadioButtonsGroup/RadioButtonsGroup'
 import { useRouter } from 'next/router'
+import { useAppSelector } from '../../../redux/app/hooks'
+import { selectTokenBlocks } from '../../../redux/features/icon/iconSlice'
+import { DebounceInput } from 'react-debounce-input';
+import AutoSuggest from '../../AutoSuggest/AutoSuggest'
 function SearchBanner() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const { token } = useAppSelector(selectTokenBlocks)
   const [query, setQuery] = useState<string>('')
   const router = useRouter()
   const handleCheck = (type: string) => {
@@ -49,17 +54,14 @@ function SearchBanner() {
               />
             )}
           </div>
-          <input
-            onChange={(e) => setQuery(e.target.value)}
-            className={style.searchInput}
-            type='text'
-          />
+          <DebounceInput className={style.searchInput} forceNotifyByEnter debounceTimeout={500} type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
           <div onClick={handleSearch} className={style.searchButton}>
             <div>
               <SearchIcon style={{ color: 'white' }} />
             </div>
           </div>
         </div>
+        <AutoSuggest token={token} query={query} limit={10} typeToSearch={typeToSearch} />
       </form>
     </>
   )

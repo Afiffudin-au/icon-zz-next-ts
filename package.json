@@ -26,6 +26,7 @@
     "node-sass": "^6.0.1",
     "react": "17.0.2",
     "react-bootstrap": "^1.6.3",
+    "react-debounce-input": "^3.2.5",
     "react-dom": "17.0.2",
     "react-redux": "^7.2.5"
   },

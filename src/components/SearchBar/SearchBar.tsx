@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import style from './SearchBar.module.scss'
 import SearchIcon from '@mui/icons-material/Search'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import RadioButtonsGroup from '../Banner/RadioButtonsGroup/RadioButtonsGroup'
-import { useAppDispatch, useAppSelector } from '../../redux/app/hooks'
+import { useAppSelector } from '../../redux/app/hooks'
 import {
-  addParameter,
   selectTokenBlocks,
 } from '../../redux/features/icon/iconSlice'
 import { useRouter } from 'next/router'
+import AutoSuggest from '../AutoSuggest/AutoSuggest'
+import { DebounceInput } from 'react-debounce-input'
 
 function SearchBar() {
   const [query, setQuery] = useState<string>('')
@@ -17,7 +18,6 @@ function SearchBar() {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const { token, tokenAccepted } = useAppSelector(selectTokenBlocks)
   const router = useRouter()
-  const dispatch = useAppDispatch()
   const handleCheck = (type: string) => {
     setIsChecked(!isChecked)
     setTypeToSearch(type)
@@ -39,10 +39,6 @@ function SearchBar() {
       router.push(`/search-packs/${query}`)
     }
   }
-  useEffect(() => {
-    // getAccessToken()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   return (
     <div>
       <form onSubmit={handleSearch} className={style.searchBanner} action='/'>
@@ -61,12 +57,7 @@ function SearchBar() {
               />
             )}
           </div>
-
-          <input
-            onChange={(e) => setQuery(e.target.value)}
-            className={style.searchInput}
-            type='text'
-          />
+          <DebounceInput className={style.searchInput} forceNotifyByEnter debounceTimeout={500} type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
           <div onClick={handleSearch} className={style.searchButton}>
             <div>
               <SearchIcon style={{ color: 'white' }} />
@@ -74,6 +65,7 @@ function SearchBar() {
           </div>
         </div>
       </form>
+      <AutoSuggest token={token} query={query} limit={10} typeToSearch={typeToSearch} />
     </div>
   )
 }

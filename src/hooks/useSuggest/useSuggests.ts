@@ -3,10 +3,14 @@ import { useState } from 'react'
 export const useSuggest = () => {
   const [keywords, setKeywords] = useState <any>([])
   const [isLoading, setIsLoading] = useState <boolean>(false)
-  const getIconSuggest = (controller:any,token:string | undefined, query:string | undefined,limit:number|undefined,userText:any) => {
+  const getIconSuggest = (controller:any,token:string | undefined, query:string | undefined,limit:number|undefined,userText:any,typeToSearch:string) => {
     if (userText === '') {
       setKeywords([])
       return
+    }
+    if(keywords.length > 0){
+      //reset keywords
+      setKeywords([])
     }
     setIsLoading(true)
     fetch(
@@ -38,10 +42,14 @@ export const useSuggest = () => {
         console.error('Error', err)
       })
   }
-  const getPackSuggest = (controller:any,token:string | undefined, query:string | undefined,limit:number|undefined,userText:any) => {
+  const getPackSuggest = (controller:any,token:string | undefined, query:string | undefined,limit:number|undefined,userText:any,typeToSearch:string) => {
     if (userText === '') {
       setKeywords([])
       return
+    }
+    if(keywords.length > 0){
+      //reset keywords
+      setKeywords([])
     }
     setIsLoading(true)
     fetch(
@@ -73,10 +81,15 @@ export const useSuggest = () => {
         console.error('Error', err)
       })
   }
+  const reset = ()=>{
+    setKeywords([])
+    setIsLoading(false)
+  }
   return {
     getIconSuggest,
     getPackSuggest,
     keywords,
-    isLoading
+    isLoading,
+    reset
   }
 }

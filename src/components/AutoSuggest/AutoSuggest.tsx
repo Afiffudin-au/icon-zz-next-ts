@@ -10,20 +10,20 @@ interface AutoSuggestItems {
   typeToSearch: string
 }
 function AutoSuggest({ token, query, limit, typeToSearch }: Partial<AutoSuggestItems>) {
-  const { getIconSuggest, getPackSuggest, isLoading, keywords } = useSuggest()
+  const { getIconSuggest, getPackSuggest, isLoading, keywords, reset } = useSuggest()
   useEffect(() => {
     const userText = query?.replace(/^\s+/, '').replace(/\s+$/, '')
     let controller = new AbortController();
     if (typeToSearch === 'icons') {
-      getIconSuggest(controller, token, query, limit, userText)
+      getIconSuggest(controller, token, query, limit, userText, typeToSearch)
     }
     if (typeToSearch === 'packs') {
-      getPackSuggest(controller, token, query, limit, userText)
+      getPackSuggest(controller, token, query, limit, userText, typeToSearch)
     }
     return () => {
       controller.abort();
     };
-  }, [query])
+  }, [query, typeToSearch])
   return (
     <>
       {

@@ -11,7 +11,7 @@ import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from '../Inputs/Button/Button'
 import { sizeParams } from './paramater'
-import { useGetDownloadIcon } from '../../hooks/useGetDownloadIcon/useGetDownloadIcon'
+import useGetDownloadIcon from '../../hooks/useGetDownloadIcon/useGetDownloadIcon'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 interface DetailIconItems {

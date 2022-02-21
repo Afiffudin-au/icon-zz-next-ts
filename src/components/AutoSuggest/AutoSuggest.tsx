@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './AutoSuggest.module.scss'
 import Link from 'next/link'
 import { LoadingLinear } from '../Progress/LoadingLinear/LoadingLinear'
-import { useSuggest } from '../../hooks/useSuggest/useSuggests'
+import useSuggest from '../../hooks/useSuggest/useSuggest'
 interface AutoSuggestItems {
   token: string,
   query: string,

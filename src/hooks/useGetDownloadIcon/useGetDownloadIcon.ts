@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { saveAs } from 'file-saver'
-export const useGetDownloadIcon = ()=>{
+const useGetDownloadIcon = ()=>{
   const getDownloadIcon = (token:Required<string>,id:Required<number>,iconName = 'icon-default',size = '32',format = 'png')=>{
     axios({
       method : 'get',
@@ -23,3 +23,4 @@ export const useGetDownloadIcon = ()=>{
     getDownloadIcon
   }
 }
+export default useGetDownloadIcon

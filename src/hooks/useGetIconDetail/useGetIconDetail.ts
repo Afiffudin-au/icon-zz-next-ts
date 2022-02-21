@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addIconDetail } from '../../redux/features/icon/iconSlice'
-export const useGetIconDetail=  ()=>{
+const useGetIconDetail=  ()=>{
   const dispatch = useAppDispatch()
   const getIconDetail =  (id:number,token:Required<string>)=>{
     dispatch(addIconDetail({
@@ -30,3 +30,4 @@ export const useGetIconDetail=  ()=>{
     getIconDetail
   }
 }
+export default useGetIconDetail

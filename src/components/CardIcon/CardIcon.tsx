@@ -8,7 +8,7 @@ import Modal from '@mui/material/Modal'
 import Image from 'next/image'
 import Fade from '@mui/material/Fade'
 import ModalDetailIcon from '../ModalDetailIcon/ModalDetailIcon'
-import { useGetIconDetail } from '../../hooks/useGetIconDetail/useGetIconDetail'
+import useGetIconDetail from '../../hooks/useGetIconDetail/useGetIconDetail'
 interface CardIconItems {
   description: string
   id: number

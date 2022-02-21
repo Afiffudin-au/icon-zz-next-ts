@@ -5,8 +5,8 @@ import Modal from '@mui/material/Modal'
 import Image from 'next/image'
 import { selectTokenBlocks } from '../../redux/features/icon/iconSlice'
 import { useAppSelector } from '../../redux/app/hooks'
-import { useGetIconPackDetail } from '../../hooks/useGetIconPackDetail/useGetIconPackDetail'
-import { useGetAccessToken } from '../../hooks/useGetAccessToken/useGetAccessToken'
+import useGetIconPackDetail from '../../hooks/useGetIconPackDetail/useGetIconPackDetail'
+import useGetAccessToken from '../../hooks/useGetAccessToken/useGetAccessToken'
 interface CardIconPacksItems {
   image: string
   numberOfIcons: number

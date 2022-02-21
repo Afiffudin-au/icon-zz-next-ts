@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const useSuggest = () => {
+const useSuggest = () => {
   const [keywords, setKeywords] = useState <any>([])
   const [isLoading, setIsLoading] = useState <boolean>(false)
   const getIconSuggest = (controller:any,token:string | undefined, query:string | undefined,limit:number|undefined,userText:any,typeToSearch:string) => {
@@ -93,3 +93,4 @@ export const useSuggest = () => {
     reset
   }
 }
+export default useSuggest

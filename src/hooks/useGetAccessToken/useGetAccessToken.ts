@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 
-export const useGetAccessToken = () => {
+const useGetAccessToken = () => {
   const dispatch = useAppDispatch()
   const getAccessToken = () => {
     axios({
@@ -29,3 +29,4 @@ export const useGetAccessToken = () => {
     getAccessToken,
   }
 }
+export default useGetAccessToken

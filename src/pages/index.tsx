@@ -58,6 +58,7 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
           property='og:description'
           content={`Check out this fantastic collection of icon packs, with ${IconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
         />
+        <meta name="google-site-verification" content="Gy8DecfJhmdkMec5xQrsKKV6mriP35Ynkhxl1_eX3oU" />
       </Head>
       <NavigationBar />
       <Banner totalIcons={totalIcons} />

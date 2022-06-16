@@ -14,19 +14,6 @@ This version has a few slight improvements:
 2. Adding filters
 3. Performance
 
-## Description indonesia
-hello programmers! Saya mempunyai proyek yang sangat sederhana yaitu proyek yang menampilkan banyak icon, icon pack dan bisa didownload. Saya menggunakan API dari flaticon.com untuk pengambilan data untuk aplikasi saya. Aplikasi saya dibuat dengan menggunakan nextjs typescript, sebelumnya aplikasi ini dibuat dengan menggunakan reactjs typescript.  reactjs typescript version di https://github.com/Afiffudin-au/zz-icon (reactjs version).
-
-Aplikasi ini akan menyajikan konten seperti icon, icon packs, pencarian icons, pencarian paket icon, halaman icons, halaman paket icon, detail, filter, pagenation dan lain-lain. Semua itu dibalut menggunakan framework nextjs dan itu telah menunjukan performa yang sangat cepat. 
-
-Versi ini memiliki sedikit beberapa peningkatan : 
-1. UI
-2. penambahan filter
-3. Performa
-
-## Note
-Most of my projects are of the private type, but for now and so on I will make my projects public freely.
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

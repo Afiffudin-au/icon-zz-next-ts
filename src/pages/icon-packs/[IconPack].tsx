@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import SearchAlert from '../../components/Alert/Warning/SearchAlert'
-import CardIconPacks from '../../components/CardIconPack/CardIconPack'
-import Drawer from '../../components/Drawers/DrawerForIconPacks/Drawer/Drawer'
-import GridContainer from '../../components/GridContainer/GridContainer'
-import NavigationBar from '../../components/NavigationBar/NavigationBar'
-import Pagenation from '../../components/Pagenation/Pagenation'
-import SearchBar from '../../components/SearchBar/SearchBar'
+import SearchAlert from '../../components/Alert/Warning'
+import CardIconPacks from '../../components/CardIconPack'
+import Drawer from '../../components/Drawers/DrawerForIconPacks/Drawer'
+import GridContainer from '../../components/GridContainer'
+import NavigationBar from '../../components/NavigationBar'
+import Pagenation from '../../components/Pagenation'
+import SearchBar from '../../components/SearchBar'
 import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
@@ -135,7 +135,9 @@ export const getServerSideProps = async (context: any) => {
   if (parseInt(params.limit) !== iconPacks.metadata.count) {
     endOfPage = pageLimiter(1, 1)
   } else {
-    const limitCount = Math.floor(iconPacks.metadata.total / iconPacks.metadata.count)
+    const limitCount = Math.floor(
+      iconPacks.metadata.total / iconPacks.metadata.count
+    )
     endOfPage = pageLimiter(parseInt(pageProp), limitCount)
   }
   return {
@@ -144,7 +146,7 @@ export const getServerSideProps = async (context: any) => {
       tokenResult,
       pageProp,
       key,
-      endOfPage
+      endOfPage,
     },
   }
 }

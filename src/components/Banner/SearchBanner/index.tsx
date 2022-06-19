@@ -1,22 +1,19 @@
 import React, { useState } from 'react'
-import style from './SearchBar.module.scss'
+import style from './SearchBanner.module.scss'
 import SearchIcon from '@mui/icons-material/Search'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import RadioButtonsGroup from '../Banner/RadioButtonsGroup/RadioButtonsGroup'
-import { useAppSelector } from '../../redux/app/hooks'
-import {
-  selectTokenBlocks,
-} from '../../redux/features/icon/iconSlice'
+import RadioButtonsGroup from '../RadioButtonsGroup'
 import { useRouter } from 'next/router'
-import AutoSuggest from '../AutoSuggest/AutoSuggest'
+import { useAppSelector } from '../../../redux/app/hooks'
+import { selectTokenBlocks } from '../../../redux/features/icon/iconSlice'
 import { DebounceInput } from 'react-debounce-input'
-
-function SearchBar() {
-  const [query, setQuery] = useState<string>('')
+import AutoSuggest from '../../AutoSuggest'
+function SearchBanner() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false)
   const [typeToSearch, setTypeToSearch] = useState<string>('icons')
   const [isChecked, setIsChecked] = useState<boolean>(false)
-  const { token, tokenAccepted } = useAppSelector(selectTokenBlocks)
+  const { token } = useAppSelector(selectTokenBlocks)
+  const [query, setQuery] = useState<string>('')
   const router = useRouter()
   const handleCheck = (type: string) => {
     setIsChecked(!isChecked)
@@ -40,7 +37,7 @@ function SearchBar() {
     }
   }
   return (
-    <div>
+    <>
       <form onSubmit={handleSearch} className={style.searchBanner} action='/'>
         <div className={style.searchBar}>
           <div className={style.dropdownWrap}>
@@ -57,17 +54,29 @@ function SearchBar() {
               />
             )}
           </div>
-          <DebounceInput className={style.searchInput} forceNotifyByEnter debounceTimeout={500} type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <DebounceInput
+            className={style.searchInput}
+            forceNotifyByEnter
+            debounceTimeout={500}
+            type='text'
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
           <div onClick={handleSearch} className={style.searchButton}>
             <div>
               <SearchIcon style={{ color: 'white' }} />
             </div>
           </div>
         </div>
+        <AutoSuggest
+          token={token}
+          query={query}
+          limit={10}
+          typeToSearch={typeToSearch}
+        />
       </form>
-      <AutoSuggest token={token} query={query} limit={10} typeToSearch={typeToSearch} />
-    </div>
+    </>
   )
 }
 
-export default SearchBar
+export default SearchBanner

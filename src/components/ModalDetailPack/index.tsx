@@ -1,14 +1,14 @@
 import React from 'react'
 import styles from './ModalDetailPack.module.scss'
 import CloseIcon from '@mui/icons-material/Close'
-import { useStylesModal } from '../../hooks/useStylesModal/useStylesModal'
+import { useStylesModal } from '../../hooks/useStylesModal/indeex'
 import { IconButton } from '@mui/material'
 import { useAppSelector } from '../../redux/app/hooks'
 import {
   selectIconPackDetailBlocks,
   selectTokenBlocks,
 } from '../../redux/features/icon/iconSlice'
-import { LoadingLinear } from '../Progress/LoadingLinear/LoadingLinear'
+import { LoadingLinear } from '../Progress/LoadingLinear'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 interface DetailPackItems {

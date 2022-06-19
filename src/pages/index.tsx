@@ -1,15 +1,15 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Banner from '../components/Banner/Banner'
-import NavigationBar from '../components/NavigationBar/NavigationBar'
+import Banner from '../components/Banner'
+import NavigationBar from '../components/NavigationBar'
 import styles from '../styles/Home.module.css'
 import { headers } from '../headers'
 import { useRouter } from 'next/dist/client/router'
-import GridContainer from '../components/GridContainer/GridContainer'
-import CardIconPacks from '../components/CardIconPack/CardIconPack'
+import GridContainer from '../components/GridContainer'
+import CardIconPacks from '../components/CardIconPack'
 import { useEffect, useState } from 'react'
-import Pagenation from '../components/Pagenation/Pagenation'
+import Pagenation from '../components/Pagenation'
 import { useAppDispatch } from '../redux/app/hooks'
 import { addToken } from '../redux/features/icon/iconSlice'
 import { IconPacksItems } from '../interfaces/IconPackInterface'
@@ -51,14 +51,20 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
           content='https://icon-zz-ts.vercel.app/icon-packs/icon-pack'
         />
         <meta property='og:site_name' content='IconZzTs' />
-        <meta property='og:image' content={IconPacks.data[0].images.sprite} />
+        <meta
+          property='og:image'
+          content='https://res.cloudinary.com/dblvavqbv/image/upload/v1641015997/portfolio-images/icon-zz_yaf688.png'
+        />
         <meta property='og:image:alt' content='Icon packs' />
         <meta property='og:type' content='website' />
         <meta
           property='og:description'
           content={`Check out this fantastic collection of icon packs, with ${IconPacks.data.length} icon packs for your desktop, phone tablet, and design.`}
         />
-        <meta name="google-site-verification" content="Gy8DecfJhmdkMec5xQrsKKV6mriP35Ynkhxl1_eX3oU" />
+        <meta
+          name='google-site-verification'
+          content='Gy8DecfJhmdkMec5xQrsKKV6mriP35Ynkhxl1_eX3oU'
+        />
       </Head>
       <NavigationBar />
       <Banner totalIcons={totalIcons} />

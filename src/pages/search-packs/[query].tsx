@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import SearchAlert from '../../components/Alert/Warning/SearchAlert'
-import CardIconPacks from '../../components/CardIconPack/CardIconPack'
-import Drawer from '../../components/Drawers/DrawerForSearchPack/Drawer'
-import GridContainer from '../../components/GridContainer/GridContainer'
-import NavigationBar from '../../components/NavigationBar/NavigationBar'
-import Pagenation from '../../components/Pagenation/Pagenation'
-import SearchBar from '../../components/SearchBar/SearchBar'
+import SearchAlert from '../../components/Alert/Warning'
+import CardIconPacks from '../../components/CardIconPack'
+import Drawer from '../../components/Drawers/DrawerForSearchPack'
+import GridContainer from '../../components/GridContainer'
+import NavigationBar from '../../components/NavigationBar'
+import Pagenation from '../../components/Pagenation'
+import SearchBar from '../../components/SearchBar'
 import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
 import { useAppDispatch } from '../../redux/app/hooks'
@@ -28,7 +28,13 @@ interface SearchPacks {
   query: any
   endOfPage: boolean
 }
-function SearchPack({ iconPacks, pageProp, tokenResult, query, endOfPage }: SearchPacks) {
+function SearchPack({
+  iconPacks,
+  pageProp,
+  tokenResult,
+  query,
+  endOfPage,
+}: SearchPacks) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -151,7 +157,9 @@ export const getServerSideProps = async (context: any) => {
   if (parseInt(params.limit) !== iconPacks.metadata.count) {
     endOfPage = pageLimiter(1, 1)
   } else {
-    const limitCount = Math.floor(iconPacks.metadata.total / iconPacks.metadata.count)
+    const limitCount = Math.floor(
+      iconPacks.metadata.total / iconPacks.metadata.count
+    )
     endOfPage = pageLimiter(parseInt(pageProp), limitCount)
   }
 

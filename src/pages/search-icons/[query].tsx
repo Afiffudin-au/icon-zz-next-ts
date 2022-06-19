@@ -1,20 +1,26 @@
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import SearchAlert from '../../components/Alert/Warning/SearchAlert'
-import CardIcon from '../../components/CardIcon/CardIcon'
-import Drawer from '../../components/Drawers/DrawerForSearchIcon/Drawer'
-import GridContainerIcon from '../../components/GridContainerIcon/GridContainerIcon'
-import NavigationBar from '../../components/NavigationBar/NavigationBar'
-import Pagenation from '../../components/Pagenation/Pagenation'
-import SearchBar from '../../components/SearchBar/SearchBar'
+import SearchAlert from '../../components/Alert/Warning'
+import CardIcon from '../../components/CardIcon'
+import Drawer from '../../components/Drawers/DrawerForSearchIcon'
+import GridContainerIcon from '../../components/GridContainerIcon'
+import NavigationBar from '../../components/NavigationBar'
+import Pagenation from '../../components/Pagenation'
+import SearchBar from '../../components/SearchBar'
 import { headers } from '../../headers'
 import { IconItems } from '../../interfaces/iconItem'
 import { useAppDispatch } from '../../redux/app/hooks'
 import { addToken } from '../../redux/features/icon/iconSlice'
 import Head from 'next/head'
 import { pageLimiter } from '../../utils/pageLimiter/pageLimiter'
-function SearchIcon({ pageProp, tokenResult, dataIcons, query, endOfPage }: any) {
+function SearchIcon({
+  pageProp,
+  tokenResult,
+  dataIcons,
+  query,
+  endOfPage,
+}: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -51,7 +57,10 @@ function SearchIcon({ pageProp, tokenResult, dataIcons, query, endOfPage }: any)
           content={`https://icon-zz-ts.vercel.app/search-icons/${query} - IconZzTs`}
         />
         <meta property='og:site_name' content='IconZzTs' />
-        <meta property='og:image' content={dataIcons?.data[0]?.images.png[128]} />
+        <meta
+          property='og:image'
+          content={dataIcons?.data[0]?.images.png[128]}
+        />
         <meta property='og:image:alt' content='Icons Search' />
         <meta property='og:type' content='website' />
         <meta
@@ -134,7 +143,9 @@ export const getServerSideProps = async (context: any) => {
   if (parseInt(params.limit) !== dataIcons.metadata.count) {
     endOfPage = pageLimiter(1, 1)
   } else {
-    const limitCount = Math.floor(dataIcons.metadata.total / dataIcons.metadata.count)
+    const limitCount = Math.floor(
+      dataIcons.metadata.total / dataIcons.metadata.count
+    )
     endOfPage = pageLimiter(parseInt(pageProp), limitCount)
   }
   return {
@@ -144,7 +155,7 @@ export const getServerSideProps = async (context: any) => {
       dataIcons,
       key,
       query,
-      endOfPage
+      endOfPage,
     },
   }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Jumbotron, Container } from 'react-bootstrap'
 import style from './Banner.module.scss'
-import SearchBanner from './SearchBanner/SearchBanner'
+import SearchBanner from './SearchBanner'
 function Banner({ totalIcons }: { totalIcons: Required<any> }) {
   return (
     <div className={style.banner}>

@@ -1,17 +1,17 @@
 import React from 'react'
 import styles from './ModalDetailIcon.module.scss'
-import { useStylesModal } from '../../hooks/useStylesModal/useStylesModal'
+import { useStylesModal } from '../../hooks/useStylesModal/indeex'
 import { useAppSelector } from '../../redux/app/hooks'
 import {
   selectIconDetailBlocks,
   selectTokenBlocks,
 } from '../../redux/features/icon/iconSlice'
-import { LoadingLinear } from '../Progress/LoadingLinear/LoadingLinear'
+import { LoadingLinear } from '../Progress/LoadingLinear'
 import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import Button from '../Inputs/Button/Button'
+import Button from '../Inputs/Button'
 import { sizeParams } from './paramater'
-import useGetDownloadIcon from '../../hooks/useGetDownloadIcon/useGetDownloadIcon'
+import useGetDownloadIcon from '../../hooks/useGetDownloadIcon'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 interface DetailIconItems {

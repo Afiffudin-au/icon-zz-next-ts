@@ -6,7 +6,7 @@ import CardIconPacks from '../../components/CardIconPack'
 import Drawer from '../../components/Drawers/DrawerForSearchPack'
 import GridContainer from '../../components/GridContainer'
 import NavigationBar from '../../components/NavigationBar'
-import Pagenation from '../../components/Pagenation'
+import Pagination from '../../components/Pagination'
 import SearchBar from '../../components/SearchBar'
 import { headers } from '../../headers'
 import { IconPacksItems } from '../../interfaces/IconPackInterface'
@@ -38,7 +38,7 @@ function SearchPack({
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const handlePagenation = (page: number) => {
+  const handlePagination = (page: number) => {
     if (page === 0) return
     setPageNumber(page)
     const path = router.pathname
@@ -94,9 +94,9 @@ function SearchPack({
         ))}
       </GridContainer>
       {iconPacks?.data.length !== 0 ? (
-        <Pagenation
+        <Pagination
           endOfPage={endOfPage}
-          handlePagenation={handlePagenation}
+          handlePagination={handlePagination}
           page={parseInt(pageProp)}
         />
       ) : (

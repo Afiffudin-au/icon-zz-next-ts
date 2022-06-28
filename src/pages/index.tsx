@@ -9,15 +9,15 @@ import { useRouter } from 'next/dist/client/router'
 import GridContainer from '../components/GridContainer'
 import CardIconPacks from '../components/CardIconPack'
 import { useEffect, useState } from 'react'
-import Pagenation from '../components/Pagenation'
+import Pagination from '../components/Pagination'
 import { useAppDispatch } from '../redux/app/hooks'
 import { addToken } from '../redux/features/icon/iconSlice'
 import { IconPacksItems } from '../interfaces/IconPackInterface'
 const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
   const dispatch = useAppDispatch()
-  const [pageNumber, setPageNumber] = useState<number>(page || 1)
+  const [pageNumber, setPageNumber] = useState<number>(parseInt(page) || 1)
   const router = useRouter()
-  const handlePagenation = (page: number) => {
+  const handlePagination = (page: number) => {
     if (page === 0) return
     setPageNumber(page)
     const path = router.pathname
@@ -32,7 +32,7 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
   useEffect(() => {
     dispatch(
       addToken({
-        token: tokenResult.data.token,
+        token: tokenResult,
       })
     )
   }, [])
@@ -80,52 +80,53 @@ const Home: NextPage = ({ totalIcons, tokenResult, IconPacks, page }: any) => {
             />
           ))}
       </GridContainer>
-      <Pagenation handlePagenation={handlePagenation} page={pageNumber} />
+      <Pagination handlePagination={handlePagination} page={pageNumber} />
     </div>
   )
 }
 export const getServerSideProps = async (context: any) => {
   const page = context.query.page || 1
   const limit = context.query.limit || 20
-  const tokenResult = await axios({
+  const resToken = await axios({
     method: 'post',
     headers: headers,
     url: 'https://api.flaticon.com/v2/app/authentication',
     params: {
       apikey: process.env.REACT_APP_API_KEY,
     },
+  }).catch((err) => {
+    return err.response
   })
-    .then((res) => {
-      return res.data
-    })
-    .catch((err) => {
-      return err
-    })
-  const [totalIcons, IconPacks] = await Promise.all([
+  if (resToken.status > 300) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    }
+  }
+  const token = resToken.data.data.token
+  const [resTotalIcon, resIconPack] = await Promise.all([
     //TotalIcons
     axios({
       method: 'get',
       headers: {
         Accept: 'application/json',
-        Authorization: 'Bearer ' + tokenResult.data.token,
+        Authorization: 'Bearer ' + token,
       },
       url: 'https://api.flaticon.com/v2/total/icons',
       params: {
         apikey: process.env.REACT_APP_API_KEY,
       },
-    })
-      .then((res) => {
-        return res.data.data.total
-      })
-      .catch((err) => {
-        return err
-      }),
+    }).catch((err) => {
+      return err.response
+    }),
     // IconPacks
     axios({
       method: 'get',
       headers: {
         Accept: 'application/json',
-        Authorization: 'Bearer ' + tokenResult.data.token,
+        Authorization: 'Bearer ' + token,
       },
       url: 'https://api.flaticon.com/v2/items/packs/priority',
       params: {
@@ -133,16 +134,26 @@ export const getServerSideProps = async (context: any) => {
         limit: limit,
         color: 2,
       },
-    })
-      .then((res) => {
-        return res.data
-      })
-      .catch((err) => {
-        return err
-      }),
+    }).catch((err) => {
+      return err.response
+    }),
   ])
+  if (resIconPack.status > 300) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false,
+      },
+    }
+  }
   return {
-    props: { totalIcons, tokenResult, IconPacks, page },
+    props: {
+      totalIcons:
+        resTotalIcon.data.data === undefined ? 0 : resTotalIcon.data.data.total,
+      tokenResult: token,
+      IconPacks: resIconPack.data,
+      page,
+    },
   }
 }
 export default Home

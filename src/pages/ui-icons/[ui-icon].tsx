@@ -6,7 +6,7 @@ import CardIcon from '../../components/CardIcon'
 import Drawer from '../../components/Drawers/DrawerForUiIcon'
 import GridContainerIcon from '../../components/GridContainerIcon'
 import NavigationBar from '../../components/NavigationBar'
-import Pagenation from '../../components/Pagenation'
+import Pagination from '../../components/Pagination'
 import SearchBar from '../../components/SearchBar'
 import { headers } from '../../headers'
 import { IconItems } from '../../interfaces/iconItem'
@@ -18,7 +18,7 @@ function UiIcon({ pageProp, tokenResult, dataIcons, endOfPage }: any) {
   const [pageNumber, setPageNumber] = useState<number>(parseInt(pageProp) || 1)
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const handlePagenation = (page: number) => {
+  const handlePagination = (page: number) => {
     if (page === 0) return
     setPageNumber(page)
     const query: any = router.query
@@ -71,16 +71,15 @@ function UiIcon({ pageProp, tokenResult, dataIcons, endOfPage }: any) {
             key={item.id}
             image={item.images.png[128]}
             id={item.id}
-            packId={item.pack_id}
             description={item.description}
             premium={item.premium}
           />
         ))}
       </GridContainerIcon>
       {dataIcons?.data.length !== 0 ? (
-        <Pagenation
+        <Pagination
           endOfPage={endOfPage}
-          handlePagenation={handlePagenation}
+          handlePagination={handlePagination}
           page={parseInt(pageProp)}
         />
       ) : (

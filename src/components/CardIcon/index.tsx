@@ -12,7 +12,6 @@ import useGetIconDetail from '../../hooks/useGetIconDetail'
 interface CardIconItems {
   description: string
   id: number
-  packId: number
   image: string
   premium: any
 }
@@ -20,7 +19,6 @@ function CardIcon({
   image,
   id,
   description,
-  packId,
   premium,
 }: Required<CardIconItems>) {
   const { getIconDetail } = useGetIconDetail()
